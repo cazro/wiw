@@ -160,10 +160,10 @@ app.get('/shifts',function(req,res,next){
 	delete shifts;
 	shifts = [];
 	getShifts(mdb,function(shift){
-		shifts.push(shift);
+            shifts.push(shift);
 	},function(){
 		
-		res.send({'shifts':shifts}).end();
+            res.send({'shifts':shifts}).end();
 	});
 
 	res.status('200');
@@ -172,11 +172,9 @@ app.get('/shifts',function(req,res,next){
 app.get('/users',function(req,res,next){
 	
 	findUser(req.cookies.uid,function(user){
-		res.status(200);
-		res.send(user).end();
-			
+            res.status(200);
+            res.send(user).end();
 	});
-
 });
 ////////////////////
 // POSTS
