@@ -6,7 +6,7 @@ wiwApp.factory('AuthFactory',
         var key;
         $.getJSON('/js/var/wiw.json',function(obj){
             key = obj.WKey;
-        })
+        });
         return  {
             wiwLogin: $resource('https://api.wheniwork.com/2/login',null,{
                 login:
