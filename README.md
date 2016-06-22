@@ -1,4 +1,4 @@
-# wiw
+# When I Work SpreadSheets
 
 I was frustrated with the presentation of shifts on WhenIWork.com 's website 
 so I created this server/front-end application using Node and Angular. I created 
