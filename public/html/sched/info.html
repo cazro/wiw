@@ -1,0 +1,31 @@
+<script type="text/ng-template" id="shiftInfoModal.html" >
+	<div ng-keypress="close()">
+		<div class="modal-header">
+			<h2 class="modal-title">{{user.first_name}} {{user.last_name}}</h2>
+			<h3 class="modal-title">{{shift.position_name}}</h3>
+			<h4 class="modal-title">{{shift.start_time | date:'MMM d yyyy'}}</h3>
+			<h4 class="modal-title">{{shift.start_time | date:'HH:mm'}} - {{shift.end_time | date:"HH:mm"}}</h4>
+		</div>
+		<div class="modal-body">
+			<p>
+				{{shift.notes}}
+			</p>
+			<p>
+				{{shift.acknowledged || shift.acknowledged_at?"Acknowledged ":"Not Acknowledged Yet"}}{{shift.acknowledged_at | date:"EEE MMM d yyyy"}}
+			</p>
+			<p>
+				{{displayName(shift.creator_id)}}
+			</p>
+			<p> 
+				Published on {{shift.published_date | date:"EEE MMM d yyyy"}}
+			</p>
+		</div>
+		<div class="modal-footer center">
+			<form id="Info" role="form" name="Info">
+				<input type="hidden" id="getinfo" name="getinfo" value="yes">
+				<button class="btn" autofocus tabindex="1" type="button" ng-click="close()">Close</button>
+			</form>
+		</div>
+	</div>
+</script>
+<div ng-init="openShInfo()"></div>

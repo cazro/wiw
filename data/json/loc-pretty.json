@@ -1,0 +1,50 @@
+{
+    "locations": [
+        {
+            "account_id": 400638,
+            "address": "5901 W Memorial Rd, Oklahoma City, Oklahoma 73142",
+            "coordinates": [
+                35.610481,
+                -97.621811
+            ],
+            "created_at": "Mon, 06 Jul 2015 14:01:27 -0500",
+            "id": 652842,
+            "ip_address": "",
+            "is_default": 0,
+            "is_deleted": false,
+            "latitude": 35.610481,
+            "longitude": -97.621811,
+            "max_hours": 40,
+            "name": "OKC",
+            "place": null,
+            "place_confirmed": false,
+            "place_id": "",
+            "radius": 100,
+            "sort": 0,
+            "updated_at": "Fri, 17 Jul 2015 11:05:02 -0500"
+        },
+        {
+            "account_id": 400638,
+            "address": "2600 Kings Highway, Suite 1019 Shreveport, LA 71103",
+            "coordinates": [
+                32.481426,
+                -93.779266
+            ],
+            "created_at": "Fri, 17 Jul 2015 04:54:41 -0500",
+            "id": 668532,
+            "ip_address": "",
+            "is_default": 0,
+            "is_deleted": false,
+            "latitude": 32.481426,
+            "longitude": -93.779266,
+            "max_hours": 40,
+            "name": "SHR",
+            "place": null,
+            "place_confirmed": false,
+            "place_id": "",
+            "radius": 100,
+            "sort": 0,
+            "updated_at": "Fri, 17 Jul 2015 11:06:43 -0500"
+        }
+    ]
+}

@@ -1,0 +1,86 @@
+<md-toolbar id="Title" class="navbar navbar-fixed-top" md-theme="default">
+	<div class="md-toolbar-tools">
+		<md-button class="md-icon-button" aria-label="Settings">
+		  <ng-md-icon icon="schedule"></ng-md-icon>
+		</md-button>
+		<h2>
+		  <span ng-bind="$parent.site_title"></span>
+		</h2>
+		<span flex></span>
+	
+		<md-button ng-if="(Schedule.newShifts.shifts.length > 0 || Schedule.newShifts.removed.length >0 )&& showUnpub" ng-click="createShifts()" class="md-warn">
+			Add New Shifts
+		</md-button>
+	
+	</div>
+</md-toolbar>
+<md-toolbar md-scroll-shrink="true" md-theme="default">
+	<div class="md-toolbar-tools">
+		
+	</div>
+</md-toolbar>
+<md-toolbar id="Dates" md-scroll-shrink="true" md-theme="default">
+	<div layout-xs="column" layout-align="space-around stretch" layout="row">
+		<div class="date-contain">
+		<md-datepicker ng-change="dateChange()" ng-model="Schedule.start" md-placeholder="Enter start date" md-max-date="Schedule.end"></md-datepicker>
+		</div>
+		<div class="date-contain">
+		<md-datepicker ng-change="dateChange()" ng-model="Schedule.end" md-placeholder="Enter end date" md-min-date="Schedule.start" ></md-datepicker>
+		</div>
+		<div flex="75">
+
+		</div>
+			<md-menu md-offset="0 50">
+			<md-button aria-label="Open user menu" ng-click="$mdOpenMenu()">
+				<span>
+					<img ng-src="{{formatAvatar($parent.user.avatar.url)}}" class="user-avatar">
+				</span>
+				<span>{{$parent.user.first_name+' '+$parent.user.last_name}}
+				</span>
+				<ng-md-icon icon="expand_more"></ng-md-icon> 
+			</md-button>
+			<md-menu-content width="3">
+				<md-menu-item ng-if="$parent.user.role < 3 || $parent.user.id === 3562992" >
+					<md-button aria-label="Show published or all" ng-click="changePub()">
+						Show Unpublished
+						<ng-md-icon icon="check_box" ng-if="showUnpub"></ng-md-icon>
+						<ng-md-icon icon="check_box_outline_blank" ng-if="!showUnpub"></ng-md-icon>
+					</md-button>
+				</md-menu-item>
+				<md-menu-divider></md-menu-divider>
+				<md-menu-item ng-repeat="loc in $parent.user.locations track by $index">
+					<md-button ng-click="$state.go('schedule');changeLoc(loc.id)">
+						<ng-md-icon icon="location_city"></ng-md-icon>
+						<span>{{loc.name}}</span>
+					</md-button>
+				</md-menu-item>
+				<md-menu-divider></md-menu-divider>
+				<md-menu-item>
+					<md-button ng-click="showSettings($event)" >
+						<ng-md-icon icon="settings"></ng-md-icon>
+						Settings
+					</md-button>
+				</md-menu-item>
+				<md-menu-divider></md-menu-divider>
+				<md-menu-item ng-repeat="loc in $parent.user.locations track by $index">
+					<md-button ng-click="loading = true;$state.go('grid.site',{site:loc.name});changeLoc(loc.id)">
+						<ng-md-icon icon="location_city"></ng-md-icon>
+						<span>Test {{loc.name}} Grid</span>
+					</md-button>
+				</md-menu-item>
+				<md-menu-divider></md-menu-divider>
+				<md-menu-item>
+					<md-button ng-click="$state.go('logout')">
+						<ng-md-icon icon="logout"></ng-md-icon>
+						<span>Log Out</span>
+					</md-button>
+				</md-menu-item>
+			</md-menu-content>
+		</md-menu>
+	</div>
+</md-toolbar>
+<div ng-show = "loading" ng-hide ="!loading">
+    <md-progress-linear md-mode="query"></md-progress-linear>
+ </div>
+<div ui-view="shifts">
+</div>

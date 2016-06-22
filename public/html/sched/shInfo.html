@@ -1,0 +1,53 @@
+<md-dialog aria-label="{{user.first_name+' '+user.last_name}}"  ng-cloak>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>{{user.first_name+' '+user.last_name}}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="images/icon/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+		<md-card>
+			<md-card-header>
+				<md-card-avatar>
+					<img ng-src="{{formatAvatar(user.avatar.url)}}" class="md-user-avatar">
+				</md-card-avatar>
+				<md-card-header-text>
+					<span class="md-headline" ng-bind="shift.position.name"></span>
+					<span class="md-subhead" ng-bind="shift.start_time | date:'EEE, MMM d, yyyy'"></span>
+					<span class="md-subhead">{{shift.start_time | date:"HHmm"}} - {{shift.end_time | date:"HHmm"}}</span>
+				</md-card-header-text>
+			</md-card-header>
+			<md-card-content>
+				<p></p>
+				<p>
+				<span class="md-subhead">
+						{{shift.notes}}
+					</span>
+				</p>
+				<p>
+					{{shift.acknowledged || shift.acknowledged_at?"Acknowledged ":"Not Acknowledged Yet"}}{{shift.acknowledged_at | date:"EEE, MMM d, yyyy"}}
+				</p>
+				<p> 
+					Published on {{shift.published_date | date:"EEE, MMM d, yyyy"}}
+				</p>
+				<p>
+					Created By: <span><img ng-src="{{formatAvatar(creator.avatar.url)}}" class="user-avatar"> {{creator.first_name +' '+creator.last_name}}</span>
+				</p>
+			</md-card-content>
+        </md-card>
+      </div>
+		
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+     
+      <md-button ng-click="answer('useful')" style="margin-right:20px;">
+        Close
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

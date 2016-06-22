@@ -1,0 +1,596 @@
+
+        {
+            "account_id": 400638,
+            "avatar": {
+                "size": "%s",
+                "url": "https://avatars.wheniwork.com/dbac78cf43c2abafe5cd1b6f58221d7dc9c38b18/%s"
+            },
+            "first_name": "Ashley",
+            "has_email": true,
+            "id": 3868711,
+            "is_deleted": false,
+            "is_hidden": true,
+            "is_private": true,
+            "last_name": "Townsley",
+            "locations": [
+                652842
+            ],
+            "position_quality": [],
+            "position_rates": [],
+            "positions": [],
+            "role": 3,
+            "sort": {
+                "652842": 1
+            }
+        }
+        {
+            "account_id": 400638,
+            "avatar": {
+                "size": "%s",
+                "url": "https://avatars.wheniwork.com/ec349e555e3d3551df0a01d76c738069287440b1/%s"
+            },
+            "first_name": "Chris",
+            "has_email": true,
+            "id": 3660843,
+            "is_deleted": false,
+            "is_hidden": false,
+            "is_private": true,
+            "last_name": "Gardner",
+            "locations": [
+                668532
+            ],
+            "position_quality": {
+                "1466382": 3,
+                "1466388": 3,
+                "1497798": 3,
+                "1500432": 3,
+                "1553281": 3,
+                "2148715": 3
+            },
+            "position_rates": [],
+            "positions": [
+                1466382,
+                1466388,
+                1497798,
+                1500432,
+                1553281,
+                2148715
+            ],
+            "role": 3,
+            "sort": {
+                "668532": 3
+            }
+        }
+        {
+            "account_id": 400638,
+            "avatar": {
+                "size": "%s",
+                "url": "https://avatars.wheniwork.com/736eafd479d3b6730c3bec03b71f4012a5401c01/%s"
+            },
+            "first_name": "Cortney",
+            "has_email": true,
+            "id": 3562986,
+            "is_deleted": false,
+            "is_hidden": false,
+            "is_private": true,
+            "last_name": "Taylor",
+            "locations": [
+                652842
+            ],
+            "position_quality": {
+                "1466379": 3,
+                "1466382": 3,
+                "1466385": 3,
+                "1466388": 3,
+                "1497798": 3
+            },
+            "position_rates": [],
+            "positions": [
+                1466379,
+                1466382,
+                1466385,
+                1466388,
+                1497798
+            ],
+            "role": 3,
+            "sort": {
+                "652842": 2
+            }
+        }
+        {
+            "account_id": 400638,
+            "avatar": {
+                "size": "%s",
+                "url": "https://avatars.wheniwork.com/e94eba2c0863b36f36da265ccffef17ba4943c0c/%s"
+            },
+            "email": "Eric.King@iba-group.com",
+            "first_name": "Eric",
+            "id": 3562992,
+            "is_deleted": false,
+            "is_hidden": false,
+            "is_private": false,
+            "last_name": "King",
+            "locations": [
+                652842
+            ],
+            "phone_number": "+19183273559",
+            "position_quality": {
+                "1466379": 3,
+                "1466382": 3,
+                "1466385": 3,
+                "1466388": 3
+            },
+            "position_rates": [],
+            "positions": [
+                1466379,
+                1466382,
+                1466385,
+                1466388
+            ],
+            "role": 3,
+            "sort": {
+                "652842": 3
+            }
+        }
+        {
+            "account_id": 400638,
+            "avatar": {
+                "size": "%s",
+                "url": "https://avatars.wheniwork.com/75c3e084d05dcfff433a92a5584907f6f1a7fb0d/%s"
+            },
+            "first_name": "Eric",
+            "has_email": true,
+            "id": 3563004,
+            "is_deleted": false,
+            "is_hidden": false,
+            "is_private": true,
+            "last_name": "Nichols",
+            "locations": [
+                652842
+            ],
+            "position_quality": {
+                "1466379": 3,
+                "1466382": 3,
+                "1466385": 3,
+                "1466388": 3,
+                "1497798": 3
+            },
+            "position_rates": [],
+            "positions": [
+                1466379,
+                1466382,
+                1466385,
+                1466388,
+                1497798
+            ],
+            "role": 3,
+            "sort": {
+                "652842": 5
+            }
+        }
+        {
+            "account_id": 400638,
+            "avatar": {
+                "size": "%s",
+                "url": "https://avatars.wheniwork.com/eb96755581a96549c70d0fb8d6273d866ed0fd8b/%s"
+            },
+            "first_name": "James",
+            "has_email": true,
+            "id": 3846505,
+            "is_deleted": false,
+            "is_hidden": false,
+            "is_private": true,
+            "last_name": "Maddux",
+            "locations": [
+                652842
+            ],
+            "position_quality": {
+                "1494375": 3,
+                "1500432": 3
+            },
+            "position_rates": [],
+            "positions": [
+                1494375,
+                1500432
+            ],
+            "role": 3,
+            "sort": {
+                "652842": 8
+            }
+        }
+        {
+            "account_id": 400638,
+            "avatar": {
+                "size": "%s",
+                "url": "https://avatars.wheniwork.com/87b46242e3fdd28258bc398df3134333400cbca6/%s"
+            },
+            "first_name": "James",
+            "has_email": false,
+            "id": 5740417,
+            "is_deleted": false,
+            "is_hidden": false,
+            "is_private": true,
+            "last_name": "Murray",
+            "locations": [
+                668532
+            ],
+            "position_quality": {
+                "1466382": 3,
+                "1466388": 3,
+                "1500432": 3,
+                "1553281": 3,
+                "2148715": 3
+            },
+            "position_rates": [],
+            "positions": [
+                1466382,
+                1466388,
+                1500432,
+                1553281,
+                2148715
+            ],
+            "role": 3,
+            "sort": {
+                "668532": 5
+            }
+        }
+        {
+            "account_id": 400638,
+            "avatar": {
+                "size": "%s",
+                "url": "https://avatars.wheniwork.com/a70e004e334393e1e5e941f523f1e307745d72e1/%s"
+            },
+            "email": "Jeffrey.Knous@iba-group.com",
+            "first_name": "Jeff",
+            "id": 5593660,
+            "is_deleted": false,
+            "is_hidden": false,
+            "is_private": false,
+            "last_name": "Knous",
+            "locations": [
+                652842
+            ],
+            "phone_number": "+19188450376",
+            "position_quality": {
+                "1466379": 3,
+                "1466382": 3,
+                "1466385": 3,
+                "1466388": 3,
+                "1494375": 3,
+                "1497798": 3,
+                "1500432": 3,
+                "1553266": 3,
+                "1553281": 3
+            },
+            "position_rates": [],
+            "positions": [
+                1466379,
+                1466382,
+                1466385,
+                1466388,
+                1494375,
+                1497798,
+                1500432,
+                1553266,
+                1553281
+            ],
+            "role": 3,
+            "sort": {
+                "652842": 7
+            }
+        }
+        {
+            "account_id": 400638,
+            "avatar": {
+                "size": "%s",
+                "url": "https://avatars.wheniwork.com/36814818951706df26804e0eaac7c5eda41ac9ca/%s"
+            },
+            "first_name": "Joe",
+            "has_email": true,
+            "id": 3562998,
+            "is_deleted": false,
+            "is_hidden": false,
+            "is_private": true,
+            "last_name": "Craig",
+            "locations": [
+                652842
+            ],
+            "position_quality": {
+                "1466379": 3,
+                "1466382": 3,
+                "1466385": 3,
+                "1466388": 3
+            },
+            "position_rates": [],
+            "positions": [
+                1466379,
+                1466382,
+                1466385,
+                1466388
+            ],
+            "role": 3,
+            "sort": {
+                "652842": 10
+            }
+        }
+        {
+            "account_id": 400638,
+            "avatar": {
+                "size": "%s",
+                "url": "https://avatars.wheniwork.com/2779b49c0fdd9b0ce23be8c36c7baeadd62487ca/%s"
+            },
+            "first_name": "Joshua",
+            "has_email": true,
+            "id": 5087248,
+            "is_deleted": false,
+            "is_hidden": false,
+            "is_private": true,
+            "last_name": "Wiens",
+            "locations": [
+                652842
+            ],
+            "position_quality": [],
+            "position_rates": [],
+            "positions": [],
+            "role": 3,
+            "sort": {
+                "652842": 9
+            }
+        }
+        {
+            "account_id": 400638,
+            "avatar": {
+                "size": "%s",
+                "url": "https://avatars.wheniwork.com/c70975923811b76e0b98bdab06d9d548fb7c6c3d/%s"
+            },
+            "email": "Keith.Miller@iba-group.com",
+            "first_name": "Keith",
+            "id": 3562995,
+            "is_deleted": false,
+            "is_hidden": false,
+            "is_private": false,
+            "last_name": "Miller",
+            "locations": [
+                652842
+            ],
+            "phone_number": "+14054095511",
+            "position_quality": {
+                "1466379": 3,
+                "1466382": 3,
+                "1466385": 3,
+                "1466388": 3
+            },
+            "position_rates": [],
+            "positions": [
+                1466379,
+                1466382,
+                1466385,
+                1466388
+            ],
+            "role": 3,
+            "sort": {
+                "652842": 4
+            }
+        }
+        {
+            "account_id": 400638,
+            "avatar": {
+                "size": "%s",
+                "url": "https://avatars.wheniwork.com/cf4bad5762cf98b55aa840fcd76afc4f2068cc94/%s"
+            },
+            "email": "kevin.romero@iba-group.com",
+            "first_name": "Kevin",
+            "has_email": true,
+            "id": 3658662,
+            "is_deleted": false,
+            "is_hidden": false,
+            "is_private": true,
+            "last_name": "Romero",
+            "locations": [
+                668532
+            ],
+            "position_quality": {
+                "1466382": 3,
+                "1466388": 3,
+                "1497798": 3,
+                "1500432": 3,
+                "1553281": 3,
+                "2148715": 3
+            },
+            "position_rates": [],
+            "positions": [
+                1466382,
+                1466388,
+                1497798,
+                1500432,
+                1553281,
+                2148715
+            ],
+            "role": 2,
+            "sort": {
+                "668532": 1
+            }
+		}
+        {
+            "account_id": 400638,
+            "avatar": {
+                "size": "%s",
+                "url": "https://avatars.wheniwork.com/3f6f5cd386d8624cf93eb35360f4dcebee713c4d/%s"
+            },
+            "first_name": "Marquise",
+            "has_email": true,
+            "id": 5672662,
+            "is_deleted": false,
+            "is_hidden": false,
+            "is_private": true,
+            "last_name": "Johnson",
+            "locations": [
+                668532
+            ],
+            "position_quality": {
+                "1466382": 3,
+                "1466388": 3,
+                "1500432": 3,
+                "1553281": 3,
+                "2148715": 3
+            },
+            "position_rates": [],
+            "positions": [
+                1466382,
+                1466388,
+                1500432,
+                1553281,
+                2148715
+            ],
+            "role": 3,
+            "sort": {
+                "668532": 4
+            }
+        }
+        {
+            "account_id": 400638,
+            "avatar": {
+                "size": "%s",
+                "url": "https://avatars.wheniwork.com/d1fbb9edfd28b9500359a558fb03bc0adc08948f/%s"
+            },
+            "email": "max.murphy@iba-group.com",
+            "first_name": "Max",
+            "has_email": true,
+            "id": 3532710,
+            "is_deleted": false,
+            "is_hidden": false,
+            "is_private": true,
+            "last_name": "Murphy",
+            "locations": [
+                652842
+            ],
+            "position_quality": [],
+            "position_rates": [],
+            "positions": [],
+            "role": 1,
+            "sort": {
+                "652842": 12
+            }
+        }
+        {
+            "account_id": 400638,
+            "avatar": {
+                "size": "%s",
+                "url": "https://avatars.wheniwork.com/37d96030ea56c842a6df56ac08654ec722d6f01e/%s"
+            },
+            "first_name": "Missions/",
+            "has_email": true,
+            "id": 5674522,
+            "is_deleted": false,
+            "is_hidden": false,
+            "is_private": true,
+            "last_name": "Visitor",
+            "locations": [
+                668532
+            ],
+            "position_quality": {
+                "1466388": 3,
+                "1500432": 3,
+                "1553281": 3
+            },
+            "position_rates": [],
+            "positions": [
+                1466388,
+                1500432,
+                1553281
+            ],
+            "role": 3,
+            "sort": {
+                "668532": 6
+            }
+        }
+        {
+            "account_id": 400638,
+            "avatar": {
+                "size": "%s",
+                "url": "https://avatars.wheniwork.com/cc4349b8d2d8d88eb8c6613aa280649c29f8b9f1/%s"
+            },
+            "email": "Mohan.Thadani@iba-group.com",
+            "first_name": "Mohan",
+            "id": 3563007,
+            "is_deleted": false,
+            "is_hidden": false,
+            "is_private": false,
+            "last_name": "Thadani",
+            "locations": [
+                652842
+            ],
+            "phone_number": "+14056790401",
+            "position_quality": [],
+            "position_rates": [],
+            "positions": [],
+            "role": 3,
+            "sort": {
+                "652842": 6
+            }
+        }
+        {
+            "account_id": 400638,
+            "avatar": {
+                "size": "%s",
+                "url": "https://avatars.wheniwork.com/a9cac1886c48cc085caecb61be677245cd404b85/%s"
+            },
+            "email": "Navid.Radnia@iba-group.com",
+            "first_name": "Navid",
+            "has_email": true,
+            "id": 3658656,
+            "is_deleted": false,
+            "is_hidden": false,
+            "is_private": true,
+            "last_name": "Radnia",
+            "locations": [
+                668532
+            ],
+            "position_quality": {
+                "1466382": 3,
+                "1466388": 3,
+                "1497798": 3,
+                "1500432": 3,
+                "1553281": 3,
+                "2148715": 3
+            },
+            "position_rates": [],
+            "positions": [
+                1466382,
+                1466388,
+                1497798,
+                1500432,
+                1553281,
+                2148715
+            ],
+            "role": 2,
+            "sort": {
+                "668532": 2
+            }
+        }
+        {
+            "account_id": 400638,
+            "avatar": {
+                "size": "%s",
+                "url": "https://avatars.wheniwork.com/790901b18872a53ddadd0ad0da53894af654293d/%s"
+            },
+            "email": "Ruben.Reyes@iba-group.com",
+            "first_name": "Ruben",
+            "has_email": true,
+            "id": 3630894,
+            "is_deleted": false,
+            "is_hidden": false,
+            "is_private": true,
+            "last_name": "Reyes",
+            "locations": [
+                652842
+            ],
+            "position_quality": [],
+            "position_rates": [],
+            "positions": [],
+            "role": 2,
+            "sort": {
+                "652842": 11
+            }
+        }
+

@@ -1,0 +1,284 @@
+/**************************
+Login Page
+***************************/
+* { 
+    box-sizing:border-box; 
+}
+html, body {
+  
+    font-family: Helvetica;
+    width:100%;
+    background-color: #eee;
+    -webkit-font-smoothing: antialiased;
+}
+md-whiteframe {
+    border-radius: 3px;
+    background-color: #F8F8F8;
+    width: 19em;
+}
+
+#logErr {
+    font-weight:700;
+    color: red;
+}
+.logBut {
+    color: #ddd !important;
+}
+footer p {
+    color: #888;
+    font-size: 13px;
+    letter-spacing: .4px;
+}
+
+footer a {
+    color: #4a89dc;
+    text-decoration: none;
+    transition: all .2s ease;
+}
+
+footer a:hover {
+    color: #666;
+    text-decoration: underline;
+}
+
+
+/*************************
+     SCHEDULE PAGE
+**************************/
+/* DATES */
+.md-button.md-warn {
+    background-color: rgb(244,67,54);
+}
+md-toolbar{
+	/*height:80px;*/
+	margin-bottom:0px;
+}
+md-datepicker.md-default-theme, md-datepicker {
+	background:none;
+}
+input.md-default-theme .md-datepicker-input, .md-datepicker-input {
+	color: #ddd;
+}
+.md-default-theme .md-datepicker-input-container, .md-datepicker-input-container{
+	border-bottom-color:inherit;
+}
+.md-default-theme .md-datepicker-input, .md-datepicker-input {
+	background:none;
+}
+md-toolbar.md-default-theme:not(.md-menu-toolbar) md-icon, md-toolbar:not(.md-menu-toolbar) md-icon{
+	color: rgba(154, 224, 133, 0.9) !important;
+}
+md-toolbar ng-md-icon{
+	fill: #eee;
+	
+}
+.user-avatar{
+	height:2.5em;
+	width:2.5em;
+	border-radius:50%;
+	border-style: outset;
+    border-width: .1em;
+    border-color: darkgrey;
+}
+.date-contain{
+	background:none;
+}
+md-toolbar h2{
+	color: #eee;
+}
+md-toolbar span{
+	color: #eee;
+}
+/* USER ROW */
+.user{
+	font-size: 22px;
+}
+#UserTableFixed{
+	display:none;
+	height:70px;
+}
+#UserTable{
+	margin-bottom:0px;
+	background-color: #eee;
+	z-index:10;
+}
+#UserTable th{
+	margin-bottom:0px;
+	vertical-align:top;
+}
+#UserTable th p{
+	margin:0px 0px 0px 0px;
+	vertical-align:top;
+}
+
+
+/*  SHIFTS */
+.ui-grid{
+	width:100%;
+	height:100%;
+}
+.table-striped>tbody>tr:nth-of-type(odd){
+	background-color: #DDFBDD;
+}
+
+/*
+.ui-grid-cell-focus[class*="ui-grid-cell-contents"]{
+	border-style: dashed;
+	border-width: 2px;
+	border-color: #cd0a0a;
+}*/
+.selected-cell{
+	border-style: dashed;
+	border-width: 2px;
+	border-color: #cd0a0a;
+}
+.md-subhead{
+	font-weight: 600;
+	margin-top:0px;
+	margin-bottom:0px;
+}
+.panel-group .panel + .panel{
+	margin-top:0px;
+}
+.panel-body{
+	padding: 0px !important;
+}
+.panel-group{
+	margin-bottom:0px !important;
+}
+.panel{
+	border-left: 0px !important;
+    border-right: 0px !important;
+    border-top: 1px solid transparent !important;
+    border-bottom: 1px solid transparent !important;
+}
+.panel-heading{
+	padding: 0px;
+}
+.accordion-toggle{
+	width:100%;
+}
+table{
+	margin-bottom: 0px !important;
+}
+#ShiftsTable{
+	margin-bottom:0px;
+	width:100%;
+}
+#ShiftSelect{
+	margin-top:-5px;
+}
+.md-select-value{
+	font-weight:bolder;
+}
+div.shift-mu{
+	top:-1px;
+	z-index:5;
+	left:-1px;
+	box-shadow:3px 3px 3px gray;
+}
+div.shift-md{
+	top:1px;
+	z-index:5;
+	left:1px;
+	box-shadow:1px 1px 2px gray;
+}
+md-input-container.shift-name{
+	position:relative;
+	margin: 0px 0px 0px 0px;
+	text-align:center;
+	
+}
+.user-col{
+	overflow-x:hidden;
+}
+md-option span{
+	font-weight: bold;
+	color:#eee;
+}
+div.shift-name{
+	position:relative;
+	border-radius:2px;
+	font-weight: bold;
+	color: rgba(20,20,20,1);
+}
+
+td a{
+	background-color:#FFFFFF;
+}
+.ui-grid-footer-cell:last-child {
+	border-right:1px solid !important;
+}
+p.shiftDate{
+	margin:0 0 0 0;
+}
+p.shift-name{	
+	opacity: 1;
+	font-weight: bold;
+	color: rgba(20,20,20,1);
+}
+p.nomarg{
+	margin: 2px 0 2px 0;
+}
+.date-col{
+	width: 4%;
+	
+}
+.shift-table{
+	table-layout:fixed;
+}
+.shiftDate{
+	font-weight:bold;
+}
+.Sunday{
+	background-color:#D5E4EC !important;
+}
+.Saturday{
+	background-color:#D5E4EC !important;
+}
+.weekend{
+	background-color:#D5E4EC !important;
+}
+.shifts.ng-hide:not(.ng-hide-animate){
+	display:inline !important;
+	opacity: .3;
+}
+/*  COUNTS ROW */
+#CountTableFixed{
+	position: fixed;
+	bottom: 0px;
+	z-index: 10;
+	background-color: #eee;
+}
+#CountTableFixed th{
+	vertical-align:middle;
+}
+#CountTable{
+	margin-bottom:0px;
+	
+}
+#CountTable th{
+	vertical-align:middle;
+}
+
+.shift-count{
+	width:6%;
+}
+.shift-countx2{
+	width:12%;
+}
+.text-center{
+	overflow: hidden;
+}
+.center{
+	text-align:center !important;
+}
+a:link{
+	text-decoration:none !important;
+}
+a:visited{
+	text-decoration:none !important;
+}
+a:hover{
+	text-decoration:none !important;	
+}

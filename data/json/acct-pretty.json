@@ -1,0 +1,172 @@
+{
+    "account": {
+        "agent_id": 26,
+        "attendance_alert_employee": 5,
+        "attendance_alert_manager": 15,
+        "billing_type": 0,
+        "cancelreason_feedback": "",
+        "cancelreason_id": 0,
+        "company": "Ion Beam Applications",
+        "converted_at": "Tue, 04 Aug 2015 11:22:02 -0500",
+        "country": {
+            "dialing_code": 1,
+            "id": 233,
+            "is_deleted": false,
+            "iso2": "US",
+            "iso3": "USA",
+            "name": "United States",
+            "sms_cost": 0,
+            "sms_credit_cost": 1
+        },
+        "country_id": 233,
+        "created_at": "Mon, 06 Jul 2015 14:01:27 -0500",
+        "custom_domain": "",
+        "deactivated_at": "0000-00-00 00:00:00",
+        "deleted_at": "Tue, 29 Nov -001 18:00:00 -0600",
+        "employee_count": 18,
+        "enabled": true,
+        "features": [
+            "locations",
+            "sites",
+            "acknowledgement",
+            "annotations",
+            "month-view",
+            "mobile-alerts",
+            "square-plan"
+        ],
+        "id": 400638,
+        "industry_id": 54,
+        "is_deactivated": 0,
+        "is_default_location_address": false,
+        "is_deleted": false,
+        "is_demo": false,
+        "limited_features": {
+            "shift_acknowledgement": true
+        },
+        "location_count": 2,
+        "logo": "",
+        "master_id": 0,
+        "mbsy_short_code": "",
+        "notifications": [
+            {
+                "key": "annual_upgrade",
+                "show": false
+            },
+            {
+                "key": "legacy_upgrade",
+                "show": false
+            },
+            {
+                "key": "trial_upgrade",
+                "show": false
+            }
+        ],
+        "payroll_date": false,
+        "payroll_hours_max": 0,
+        "payroll_overtime_multiplier": 0,
+        "payroll_type": 2,
+        "place": null,
+        "place_confirmed": false,
+        "place_id": "EjA1NjAxIFcgTWVtb3JpYWwgUmQsIE9rbGFob21hIENpdHksIE9LIDczMTQyLCBVU0E",
+        "plan_custom": 0,
+        "plan_expires": "Tue, 29 Nov -001 18:00:00 -0600",
+        "plan_id": 157,
+        "plan_texting": false,
+        "ref_employees": 20,
+        "ref_plan_id": 0,
+        "referral_code": "",
+        "referral_id": 0,
+        "required_features": [],
+        "settings": {
+            "availability": {
+                "enabled": true,
+                "is_public": true
+            },
+            "clockin": {
+                "enabled": true,
+                "mobile": {
+                    "enabled": true,
+                    "radius": 100,
+                    "strict": false
+                },
+                "window": 15,
+                "work": {
+                    "enabled": true
+                }
+            },
+            "conversations": {
+                "enabled": true
+            },
+            "integrations": {
+                "revel": false,
+                "square": false
+            },
+            "payroll": {
+                "adp_enabled": false,
+                "adp_viewable": false,
+                "dbl_multiplier": 2,
+                "enabled": true,
+                "hours_dot_daily": 24,
+                "hours_max": 40,
+                "hours_max_daily": 24,
+                "ot_multiplier": 1.5,
+                "start_date": null,
+                "timesheets": true,
+                "type": 0,
+                "work_day_start": "00:00"
+            },
+            "permissions": {
+                "text_credits": 0
+            },
+            "schedule": {
+                "24hour": 1,
+                "currency": "$",
+                "enabled": true,
+                "is_visible": true,
+                "open_scheduling": false,
+                "positions_only": false,
+                "preferred_hours": false,
+                "shift_acknowledgement": true,
+                "sort_employees": 0,
+                "split_shifts": 0,
+                "start_of_week": 0
+            },
+            "social": {
+                "enabled": false
+            },
+            "swaps": {
+                "enabled": true,
+                "manager_approval": true
+            },
+            "timeoff": {
+                "days_notice": 28,
+                "enabled": true,
+                "is_public": true,
+                "manager_approval": true,
+                "max_hours_per_day": 8,
+                "supervisor_autoapprove": false
+            }
+        },
+        "split_shifts": 0,
+        "subdomain": "400638",
+        "tax_exemption": "",
+        "text_credits": 25,
+        "time_format": 0,
+        "timezone_id": 11,
+        "timezone_name": "America/Chicago",
+        "trial_length": 30,
+        "type": 1,
+        "updated_at": "Mon, 01 Feb 2016 16:53:55 -0600",
+        "user_count": 18,
+        "uses_features": [
+            "locations",
+            "annotations"
+        ],
+        "utm_campaign": "",
+        "utm_content": "",
+        "utm_medium": "",
+        "utm_source": "",
+        "utm_term": "",
+        "wb_expires": false
+    }
+}

@@ -1,0 +1,33 @@
+
+<div ng-show="showLogin" ng-hide="!showLogin" md-theme="login" layout="column" layout-margin layout-align="space-between center">
+    <div layout-align="space-between center"  layout="column" flex="25">
+      
+        <h1 class="md-display-3" ng-bind="$parent.site_title"></h1>
+        <h3 class="md-headline">Use Your WiW Login Info</h3>
+        
+    </div>
+    <md-whiteframe layout-padding layout-margin class="md-whiteframe-3dp" flex="50">
+        <form role='form' name = "LoginForm" id="LoginForm">
+            <div layout="column"  layout-align="space-between center">
+                <div layout="row"  layout-padding layout-fill class="md-warn" layout-align="center center">
+                    <p id="logErr" class="md-caption md-warn">{{error}}</p>
+                </div>
+                <md-input-container layout-fill>
+                    <label>Email</label>
+                    <input type="email" ng-model="User.email" name="email" id="email" required>
+                </md-input-container>
+                <md-input-container  layout-fill>
+                    <label>Password</label>
+                    <input type="password" ng-model="User.pass" name="pass" id="pass" required>
+                </md-input-container>
+                <md-button layout-fill ng-click="login()" type="submit" class=" md-raised md-primary logBut">Log In</md-button>
+            </div>
+        </form>
+    </md-whiteframe>
+    <div flex="25">
+        <footer>
+            <p>Suggestion or bug? <a href="mailto:webmaster@schedule.opctc.org?subject=When%20I%20Work">Email Me</a></p>
+        </footer>
+    </div>
+</div>
+  

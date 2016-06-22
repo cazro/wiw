@@ -1,0 +1,18 @@
+<md-dialog aria-label="settings">
+	<md-dialog-content>
+		<md-list>
+			<md-subheader class="md-no-sticky">Manager</md-subheader>
+			<md-list-item class="md-3-line" ng-repeat="setting in Manager">
+				{{setting.name}} Setting for {{setting.stage}} shifts.
+				<md-select aria-label="setting" ng-style="{'{{setting.setting}}': ' '+ user.settings[setting.stage+'-'+setting.setting]?user.settings[setting.stage+'-'+setting.setting]: 'none','border-style':(user.settings[setting.stage+'-border-style']?user.settings[setting.stage+'-border-style']: 'none'),'border-width':(user.settings[setting.stage+'-border-width']?user.settings[setting.stage+'-border-width']: 'none')}" ng-model="user.settings[setting.stage+'-'+setting.setting]">
+					<md-option ng-value="item" ng-repeat="item in setting.items">{{item}}</md-option>
+				</md-select>
+			</md-list-item>
+		</md-list>
+		
+	</md-dialog-content>
+	<md-dialog-actions>
+		<md-button ng-click='apply()' class='md-primary'>Apply</md-button>
+		<md-button ng-click='cancel()' >Cancel</md-button>
+	</md-dialog-actions>
+</md-dialog>

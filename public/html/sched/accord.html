@@ -1,0 +1,98 @@
+<div md-theme="default">
+	
+	<div id="UserTableFixed"></div>
+
+	<table id = "UserTable" class="table table-bordered table-condensed shift-table">
+		<thead>
+			<tr>
+				<th class="date-col">
+					<p class="shiftDate">
+							Date
+					</p>
+				</th>
+				<th class="user-col" ng-repeat="user in Schedule.users">
+					<p class="text-center user" ng-bind='user.first_name+" "+user.last_name'></p>
+				</th>
+				<th hide-xs class="shift-count">
+					<p class="text-center">
+							Days
+					</p>
+				</th>
+				<th hide-xs class="shift-count">
+					<p class="text-center">
+							Afternoons
+					</p>
+				</th>
+			</tr>
+		</thead>
+	</table>
+	
+	<uib-accordion close-others="closeOthers" ng-if ="!loading" ng-cloak>
+		<uib-accordion-group is-open="isOpen" ng-repeat="week in Schedule.weeks">   
+			<uib-accordion-heading>
+				<md-button>
+					<h4 class = "md-subhead headings" title="{{isOpen?'Click to hide.':'Click to expand.'}}">Week of {{week.start | date:"MMM d"}} - {{week.end | date:"MMM d"}}</h3>
+
+					<md-tooltip md-direction="right">
+						{{isOpen?'Click to hide.':'Click to expand.'}}
+					</md-tooltip>
+				</md-button>
+				<i title="{{title(this.isOpen)}}" class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isOpen, 'glyphicon-chevron-right': !isOpen}"></i>
+
+			</uib-accordion-heading>
+			<table  ng-cloak class="table shift-table table-bordered table-hover table-striped table-condensed">
+				<tbody>
+					<tr ng-repeat="day in week.days" class="{{day.start | date:'EEEE'}}" title = '{{day.start | date:"EEEE"}}'>
+
+						<td  class="date-col" >
+							<p class="shiftDate">{{day.start | date:"M/d"}}</p>
+						</td>
+	<!-- SHIFTS PER USER -->
+						<td class="user-col" ng-repeat="shift in day.shifts track by $index">
+						
+							<div ng-cloak class="shift-name text-center "title ="Click for more info." ng-click="showInfo($event,shift)" ng-mousedown="mdClass='shift-md'" ng-mouseleave="mdClass='shift-mu'" ng-mouseup="mdClass='shift-mu'" ng-if="showPubUnpub(shift.published)" ng-bind='((shift.position.name).split(" "))[0]' ng-init="mdClass='shift-mu'" ng-class="mdClass" ng-style="getGrad(shift.color)">
+
+							</div>
+						
+							<div layout="column" layout-align="stretch start">
+							<md-input-container class="shift-name"  aria-label="shift select" ng-if="shift.position.name === '' && showPubUnpub(shift.published) && ($parent.user.role < 3 || $parent.user.id === 3562992)">
+								
+								<md-select md-on-close="addShift(shift,day.start,$parent.$index,$parent.$parent.$index,$parent.$parent.$parent.$index)" id="ShiftSelect"  ng-style="getSettings(shift,'new')" aria-label="Shift" ng-model="shift.selected_pos">
+									<md-optgroup label="Shifts">
+										<md-option class="shift-name" ng-style="{'background-color':'#'+pos.color}" ng-value="{removed:true}">REMOVE</md-option>
+										<md-option class="shift-name" ng-style="{'background-color':'#'+pos.color}" ng-selected="shift.selected_pos.id === pos.id" ng-value="pos" ng-repeat="pos in Schedule.positions | filter: {is_deleted: false }"><span>{{pos.name}} ({{getDate(pos.block.start_time) | date:'H:mm' }})</span></md-option>
+									</md-optgroup>
+								</md-select>
+							</md-input-container>
+							</div>
+						</td>
+								<!-- PER-DAY SHIFT COUNTS -->
+						<td hide-xs class="shift-count">
+							<p class="text-center nomarg" ng-bind='day.Day'></p>
+						</td>
+						<td hide-xs class="shift-count">
+							<p class="text-center nomarg" ng-bind='day.Afternoon'></p>
+						</td>
+
+					</tr>
+				</tbody>
+			</table>	
+		</uib-accordion-group>
+	</uib-accordion>
+	<div class="bottom-fill"></div>
+	<table ng-if ="!loading" id="CountTableFixed" class="table shift-table table-bordered table-condensed md-primary">
+		<tfoot>
+			<tr><!-- Per-Person shift count -->
+				<th class="date-col">
+	<!-- Date column -->    
+				</th>
+				<th class="user-col" ng-repeat="user in Schedule.users track by $index">
+					<p class="text-center" ng-bind='user.numShifts'></p>
+				</th>
+				<th hide-xs class="shift-countx2" colspan="2">
+	<!-- Span across Per-day shift count -->
+				</th>
+			</tr>
+		</tfoot>
+	</table>	
+	
