@@ -39,47 +39,47 @@ wiwApp.controller('AuthCtrl',
                     });
                 },
                 function(response){
-					if(response){
-						$scope.error = response.data.error;
-					}
+                    if(response){
+                        $scope.error = response.data.error;
+                    }
                 });
-				setTimeout(function(){
-					$scope.error = "No response from server!";
-					
-				},45000);
+                setTimeout(function(){
+                        $scope.error = "No response from server!";
+
+                },45000);
             };
 			
-			$scope.logout = function(){
-				$cookies.remove('uid');
-				$cookies.remove('tok');
-				$state.go('login');
-			};
+            $scope.logout = function(){
+                    $cookies.remove('uid');
+                    $cookies.remove('tok');
+                    $state.go('login');
+            };
             if($cookies.get('uid') && $cookies.get('tok') ){
-				$rootScope.user = {};
-				$rootScope.user.user = {};
-				$rootScope.user.user.id = $cookies.get('uid');
+                $rootScope.user = {};
+                $rootScope.user.user = {};
+                $rootScope.user.user.id = $cookies.get('uid');
 
-				$rootScope.user.login = {};
-				$rootScope.user.login.token = $cookies.get('tok');
-				AuthFactory.authSesh.authed(
-				 {
-					  'uid': $rootScope.user.user.id,
-					  'tok': $rootScope.user.login.token
-				  },
-				  function(res){ 
-					  $state.go('schedule');
+                $rootScope.user.login = {};
+                $rootScope.user.login.token = $cookies.get('tok');
+                AuthFactory.authSesh.authed(
+                 {
+                          'uid': $rootScope.user.user.id,
+                          'tok': $rootScope.user.login.token
+                  },
+                  function(res){ 
+                          $state.go('schedule');
 
-				  },
-				  function(err){
-					  console.log(err);
-					  
-					  $scope.showLogin = true;
-				  });
- 
-			} else {
-				$scope.showLogin = true;
-			}
-		}
+                  },
+                  function(err){
+                          console.log(err);
+
+                          $scope.showLogin = true;
+                  });
+
+            } else {
+                    $scope.showLogin = true;
+            }
+        }
 
 ]);
 		 

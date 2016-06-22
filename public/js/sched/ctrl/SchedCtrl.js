@@ -2,111 +2,111 @@
 // Remove Max and Ruben as columns and add an On-Call column with who is on-call.
 wiwApp.controller('SchedCtrl',[
     'SchedFactory',
-	'AuthFactory',
+    'AuthFactory',
     '$rootScope',
     '$scope',
     '$cookies',
     '$state',
-	'$mdDialog', 
-	'$mdMedia',
-	'$filter',
+    '$mdDialog', 
+    '$mdMedia',
+    '$filter',
     function(SchedFactory,AuthFactory,$rootScope, $scope, $cookies, $state, $mdDialog, $mdMedia,$filter){
 		
-		/*
-		 *  LOCAL VARIABLES 
-		 *
-		 */ 
-		var wiwDateFormat = 'EEE, dd MMM yyyy HH:mm:ss Z';
-		var shortdate = 'M/d/yy';
-		var shiftCutoff = 10; // Time at which to stop counting shifts as days 
-		var token;
-		var user_id;
-		var dbNewShifts;
-		var numWeeks = 5;
-		var xusers = {};
-		var xpos = {};
-		var xblocks = {};
-		var menuEv;
-		var now = new Date();
-		var start =  new Date(
-			now.getFullYear(),
-			now.getMonth(),
-			now.getDate(),
-			05,00,00);
-        var end = new Date(
-				now.getFullYear(),
+        /*
+         *  LOCAL VARIABLES 
+         *
+         */ 
+        var wiwDateFormat = 'EEE, dd MMM yyyy HH:mm:ss Z';
+        var shortdate = 'M/d/yy';
+        var shiftCutoff = 10; // Time at which to stop counting shifts as days 
+        var token;
+        var user_id;
+        var dbNewShifts;
+        var numWeeks = 5;
+        var xusers = {};
+        var xpos = {};
+        var xblocks = {};
+        var menuEv;
+        var now = new Date();
+        var start =  new Date(
+                now.getFullYear(),
                 now.getMonth(),
-				now.getDate()+(7*numWeeks), 23,59,58
+                now.getDate(),
+                05,00,00);
+        var end = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate()+(7*numWeeks), 23,59,58
         );
-		//var Schedule = {};
-		
-		//Schedule.weeks = [];
-		
-		/*
-		 *  SCOPE VARIABLES
-		 */
-		$scope.site_title = $rootScope.site_title;
-		$scope.loading = true;
-		$scope.showUnpub = false;
+        //var Schedule = {};
+
+        //Schedule.weeks = [];
+
+        /*
+         *  SCOPE VARIABLES
+         */
+        $scope.site_title = $rootScope.site_title;
+        $scope.loading = true;
+        $scope.showUnpub = false;
         $scope.Schedule = {};
 		
-		$scope.Schedule.newShifts = {};
-		$scope.Schedule.newShifts.days = [];
-		$scope.Schedule.newShifts.shifts = [];
-		$scope.Schedule.newShifts.removed = [];
-		
-		$scope.Schedule.users = [];
+        $scope.Schedule.newShifts = {};
+        $scope.Schedule.newShifts.days = [];
+        $scope.Schedule.newShifts.shifts = [];
+        $scope.Schedule.newShifts.removed = [];
 
-		$scope.Schedule.start = start;
-		$scope.Schedule.end = end;
-		
-		$scope.closeOthers = false;
-		$scope.isOpen = true;
-		
-		$scope.showInfo = showInfo;
-		$scope.getGrad = getGrad;
-	
-		/*
-		 * 
-		 * @returns {undefined}
-		 */
-		function update(){
-			construct(function(){
-				getUser(getUsers);
-			});
-			
-		}
-		var reCalc = function(){
-			for(var b in $scope.Schedule.users){
-				$scope.Schedule.users[b].numShifts = 0;
-			}
-			
-			for(var k in  $scope.Schedule.weeks){
-				
-				for(var j in  $scope.Schedule.weeks[k].days){
-					
-					$scope.Schedule.weeks[k].days[j].Day = 0;
-					$scope.Schedule.weeks[k].days[j].Afternoon = 0;
-					
-					for(var i in $scope.Schedule.weeks[k].days[j].shifts){
-						if($scope.Schedule.weeks[k].days[j].shifts[i].id || $scope.Schedule.weeks[k].days[j].shifts[i].selected_pos){
-							var shiftStart;
-							if(showPubUnpub($scope.Schedule.weeks[k].days[j].shifts[i].published))$scope.Schedule.users[xusers[$scope.Schedule.weeks[k].days[j].shifts[i].user_id]].numShifts++;
-							
-							shiftStart = new Date($scope.Schedule.weeks[k].days[j].shifts[i].start_time);
-							
-								//COUNTING SHIFTS IN A DAY
-							if($scope.Schedule.weeks[k].days[j].shifts[i].position.name !== 'TRAVEL' && showPubUnpub($scope.Schedule.weeks[k].days[j].shifts[i].published)){
-								if(shiftStart.getHours() < shiftCutoff){
-									$scope.Schedule.weeks[k].days[j].Day++;
-								} else {
-									$scope.Schedule.weeks[k].days[j].Afternoon++;
-								}
-							}	
-						}
-					}
-				}
-			}/*
+        $scope.Schedule.users = [];
+
+        $scope.Schedule.start = start;
+        $scope.Schedule.end = end;
+
+        $scope.closeOthers = false;
+        $scope.isOpen = true;
+
+        $scope.showInfo = showInfo;
+        $scope.getGrad = getGrad;
+
+        /*
+         * 
+         * @returns {undefined}
+         */
+        function update(){
+            construct(function(){
+                    getUser(getUsers);
+            });
+
+        }
+        var reCalc = function(){
+            for(var b in $scope.Schedule.users){
+                $scope.Schedule.users[b].numShifts = 0;
+            }
+
+                for(var k in  $scope.Schedule.weeks){
+
+                        for(var j in  $scope.Schedule.weeks[k].days){
+
+                                $scope.Schedule.weeks[k].days[j].Day = 0;
+                                $scope.Schedule.weeks[k].days[j].Afternoon = 0;
+
+                                for(var i in $scope.Schedule.weeks[k].days[j].shifts){
+                                        if($scope.Schedule.weeks[k].days[j].shifts[i].id || $scope.Schedule.weeks[k].days[j].shifts[i].selected_pos){
+                                                var shiftStart;
+                                                if(showPubUnpub($scope.Schedule.weeks[k].days[j].shifts[i].published))$scope.Schedule.users[xusers[$scope.Schedule.weeks[k].days[j].shifts[i].user_id]].numShifts++;
+
+                                                shiftStart = new Date($scope.Schedule.weeks[k].days[j].shifts[i].start_time);
+
+                                                        //COUNTING SHIFTS IN A DAY
+                                                if($scope.Schedule.weeks[k].days[j].shifts[i].position.name !== 'TRAVEL' && showPubUnpub($scope.Schedule.weeks[k].days[j].shifts[i].published)){
+                                                        if(shiftStart.getHours() < shiftCutoff){
+                                                                $scope.Schedule.weeks[k].days[j].Day++;
+                                                        } else {
+                                                                $scope.Schedule.weeks[k].days[j].Afternoon++;
+                                                        }
+                                                }	
+                                        }
+                                }
+                        }
+                }/*
 			setTimeout(function(){
 				
 				$scope.$apply();

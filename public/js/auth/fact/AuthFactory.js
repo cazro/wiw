@@ -2,6 +2,11 @@ wiwApp.factory('AuthFactory',
 [
     '$resource', 
     function($resource){
+        
+        var key;
+        $.getJSON('/js/var/wiw.json',function(obj){
+            key = obj.WKey;
+        })
         return  {
             wiwLogin: $resource('https://api.wheniwork.com/2/login',null,{
                 login:
@@ -10,7 +15,7 @@ wiwApp.factory('AuthFactory',
                     headers:
                     {
                         'Content-Type':'application/json',
-                        'W-Key':'580dfbc2e8a2b604ad6cac26e9500c1bd22c7ec9'
+                        'W-Key':key
                     }
                 }
             }),
