@@ -16,4 +16,5 @@ as a value for the element "WKey" (the only pair in the object).
 As long as you have npm and have installed all the dependencies (package.json contains all front and back end deps)
 then it should work.
 
-![Screen Shot](http://ericdavidking.com/wiw/img/wiw-ss.jpg)
+![Schedule](http://ericdavidking.com/wiw/img/wiw-ss.jpg)
+![Modal](http://ericdavidking.com/wiw/img/wiw-ss2.jpg)
