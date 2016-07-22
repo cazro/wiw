@@ -49,31 +49,26 @@ var getShifts = function(db,callback,cb2){
 };
 var findUser = function(id,callback) {
 
-	var cursor =mdb.collection('users').find({'id':parseInt(id)});
-	
-	cursor.each(function(err, doc) {
-		assert.equal(err, null);
-		if (doc !== null) {
+	var cursor = mdb.collection('users').findOne({'id':parseInt(id)});
+	var found = false;
+	cursor.forEach(function(doc) {
+		
+		if (doc !== null && !found) {
+			found = true;
 			callback(doc);
-		} else {
+			
+		} else if(doc === null && !found) {
+			callback(false);
 			
 		}
 	});
-	/*
-  for(var i in users){
-		if(users[i].id === parseInt(id)){
-			user = users[i];
-			callback(user);
-		}
-	}
-	*/
 };
 var insertUser = function(db,user,callback){
 	db.collection('users').insertOne(user,
 	function(err,result){
 		assert.equal(err,null);
-		console.log("Inserted settings for "+user.first_name+"!");
-		callback(result);
+		console.log("Inserted settings for "+user.id+"!");
+		callback(result.result);
 	});
 };
 
@@ -88,11 +83,27 @@ var updateUser = function(db,user,info,callback){
 	});
 };
 MongoClient.connect(url, function(err, db) {
-		
-
 	assert.equal(null, err);
 	console.log("Connected correctly to server.");
 	mdb = db;
+	db.listCollections({name: 'users'})
+    .next(function(err, collinfo) {
+        if (collinfo) {
+            // The collection exists
+        } else {
+			console.log("Creating collection 'users'.");
+			db.createCollection('users');
+		}
+    });
+	db.listCollections({name: 'new_shifts'})
+    .next(function(err, collinfo) {
+        if (collinfo) {
+            // The collection exists
+        } else {
+			console.log("Creating collection 'new_shifts'.");
+			db.createCollection('new_shifts');
+		}
+    });
 	//findUsers(db,function(){
 		
 	//});
@@ -154,30 +165,51 @@ app.use('/pos', authCheck, positions);
 app.use('/blocks', authCheck, blocks);
 app.use('/schedule',authCheck, schedule);
 
-// GETS
+/////////////////////
+/////// GETS ///////
+///////////////////
+
 app.get('/shifts',function(req,res,next){
 	
 	delete shifts;
 	shifts = [];
+	res.status('200');
 	getShifts(mdb,function(shift){
-            shifts.push(shift);
+        shifts.push(shift);
 	},function(){
 		
-            res.send({'shifts':shifts}).end();
+        res.send({'shifts':shifts}).end();
 	});
-
-	res.status('200');
-	
 });
 app.get('/users',function(req,res,next){
 	
+	res.status(200);
+	var sentUser = false;
 	findUser(req.cookies.uid,function(user){
-            res.status(200);
-            res.send(user).end();
+		if(user && !sentUser){
+			sentUser = true;
+			console.log("Sending user");
+            res.send(user);
+			res.end();
+		} else {
+			if(!sentUser){
+				insertUser(mdb,{'id':parseInt(req.cookies.uid)},function(result){
+					console.log(result.result);
+
+					res.send('Inserted new user');
+					res.send(result);
+					res.end();
+				});
+			}
+		}  
+		
 	});
 });
+
 ////////////////////
-// POSTS
+///////POSTS //////
+//////////////////
+
 app.post('/login', function(req,res,next) {
     var uid = req.body.uid;
     var tok = req.body.tok;
@@ -213,9 +245,7 @@ app.post('/shifts',function(req,res,next){
 			},function(){
 
 			});
-
 	});
-	
 });
 app.post('/users',function(req,res,next){
 	
@@ -226,7 +256,10 @@ app.post('/users',function(req,res,next){
 	});
 });
 
-//DELETEs
+////////////////////////
+//////// DELETEs //////
+//////////////////////
+
 app.delete('/shifts/:user_id/:date',function(req,res,next){
 	mdb.collection('new_shifts').deleteMany({
 		'user_id': parseInt(req.params.user_id),
