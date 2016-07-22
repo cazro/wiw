@@ -49,15 +49,16 @@ var getShifts = function(db,callback,cb2){
 };
 var findUser = function(id,callback) {
 
-	var cursor = mdb.collection('users').findOne({'id':parseInt(id)});
+	var cursor = mdb.collection('users').find({'id':parseInt(id)});
 	var found = false;
+	
 	cursor.forEach(function(doc) {
-		
+		console.log("Got response from mongodb");
 		if (doc !== null && !found) {
 			found = true;
 			callback(doc);
 			
-		} else if(doc === null && !found) {
+		} else if(!found) {
 			callback(false);
 			
 		}
@@ -183,19 +184,21 @@ app.get('/shifts',function(req,res,next){
 });
 app.get('/users',function(req,res,next){
 	
-	res.status(200);
+	console.log("Getting user.");
 	var sentUser = false;
 	findUser(req.cookies.uid,function(user){
+		
 		if(user && !sentUser){
 			sentUser = true;
 			console.log("Sending user");
+			res.status(200);
             res.send(user);
 			res.end();
 		} else {
 			if(!sentUser){
 				insertUser(mdb,{'id':parseInt(req.cookies.uid)},function(result){
 					console.log(result.result);
-
+					res.statusCode = 200;
 					res.send('Inserted new user');
 					res.send(result);
 					res.end();
@@ -204,6 +207,7 @@ app.get('/users',function(req,res,next){
 		}  
 		
 	});
+
 });
 
 ////////////////////
