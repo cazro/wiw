@@ -50,7 +50,8 @@ npm start
 ## Recomendations
 #### PM2
 I'd recommend using a node process manager to monitor the node server which will restart it in case it crashes.  I use PM2 which can be downloaded with npm by:
-``` npm install -g pm2
+``` 
+npm install -g pm2
 ```
 #### NGINX
 The server starts up and is assigned to port 3000 by default. This means accessing your app by going to "http://domain.com:3000" which can get tiresome and makes it more difficult for people to remember the URL.  With NGINX you can set up a reverse proxy that will forward all your connections going to "http://domain.com" to "http://domain.com:3000".  Setting that up is relatively easy and is beyond the scope of this.
