@@ -9,10 +9,8 @@ wiwApp.controller('AuthCtrl',
         function($scope, $cookies, $state, $rootScope, AuthFactory){
 			
 			$scope.showLogin = false;
-			$scope.loggingIn = false;
-            
+			
             $scope.login = function(){
-                $scope.loggingIn = true;
                 var resource = AuthFactory.wiwLogin;
                 
                 resource.login(
@@ -43,7 +41,6 @@ wiwApp.controller('AuthCtrl',
                 function(response){
                     if(response){
                         $scope.error = response.data.error;
-                        $scope.loggingIn = false;
                     }
                 });
                 setTimeout(function(){
@@ -75,13 +72,12 @@ wiwApp.controller('AuthCtrl',
                   },
                   function(err){
                           console.log(err);
-                          $scope.loggingIn = false;
+
                           $scope.showLogin = true;
                   });
 
             } else {
                     $scope.showLogin = true;
-                    $scope.loggingIn = false;
             }
         }
 

@@ -20,7 +20,7 @@
                     <label>Password</label>
                     <input type="password" ng-model="User.pass" name="pass" id="pass" required>
                 </md-input-container>
-                <md-button layout-fill ng-click="login()" type="submit" class=" md-raised md-primary logBut">Log In</md-button>
+                <md-button layout-fill ng-click="login()" ng-disabled="loggingIn" type="submit" class=" md-raised md-primary logBut">Log In</md-button>
             </div>
         </form>
     </md-whiteframe>

@@ -1,0 +1,39 @@
+{
+  "name": "wiw",
+  "description": "Front and Back end schedule viewer for WhenIWork.com",
+  "main": "app.js",
+  "authors": [
+    "Eric King"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "WhenIWork"
+  ],
+  "homepage": "https://github.com/cazro/wiw",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "angular": "^1.5.9",
+    "angular-animate": "^1.5.9",
+    "angular-aria": "^1.5.9",
+    "angular-bootstrap-contextmenu": "^0.9.9",
+    "angular-cookies": "^1.5.9",
+    "angular-material": "^1.1.1",
+    "angular-material-icons": "^0.7.1",
+    "angular-messages": "^1.5.9",
+    "angular-resource": "^1.5.9",
+    "angular-sanitize": "^1.5.9",
+    "angular-ui-bootstrap": "^2.3.0",
+    "angular-ui-grid": "ui-grid#^3.2.1",
+    "angular-ui-router": "^0.3.2",
+    "jquery": "^3.1.1",
+    "jquery-ui": "^1.12.1",
+    "bootstrap": "^3.3.7"
+  }
+}

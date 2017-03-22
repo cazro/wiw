@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+var config = require('config');
 var schedule = require('./routes/index');
 var users = require('./routes/users');
 var locations = require('./routes/locations');
@@ -14,7 +15,8 @@ var login = require('./routes/login');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
-var url = 'mongodb://localhost:27017/wiw';
+var dbConfig = config.get('mongodb');
+var url = 'mongodb://'+dbConfig.host+':'+dbConfig.port+'/'+dbConfig.db;
 var shifts;
 var user;
 var users = [];
@@ -83,35 +85,37 @@ var updateUser = function(db,user,info,callback){
 		callback(result);
 	});
 };
-MongoClient.connect(url, function(err, db) {
-	assert.equal(null, err);
-	console.log("Connected correctly to server.");
-	mdb = db;
-	db.listCollections({name: 'users'})
-    .next(function(err, collinfo) {
-        if (collinfo) {
-            // The collection exists
-        } else {
-			console.log("Creating collection 'users'.");
-			db.createCollection('users');
-		}
-    });
-	db.listCollections({name: 'new_shifts'})
-    .next(function(err, collinfo) {
-        if (collinfo) {
-            // The collection exists
-        } else {
-			console.log("Creating collection 'new_shifts'.");
-			db.createCollection('new_shifts');
-		}
-    });
-	//findUsers(db,function(){
-		
-	//});
-	//getShifts(db,function(){
-		
-	//});
-});
+if(dbConfig.enabled){
+	MongoClient.connect(url, function(err, db) {
+		assert.equal(null, err);
+		console.log("Connected correctly to server.");
+		mdb = db;
+		db.listCollections({name: 'users'})
+		.next(function(err, collinfo) {
+			if (collinfo) {
+				// The collection exists
+			} else {
+				console.log("Creating collection 'users'.");
+				db.createCollection('users');
+			}
+		});
+		db.listCollections({name: 'new_shifts'})
+		.next(function(err, collinfo) {
+			if (collinfo) {
+				// The collection exists
+			} else {
+				console.log("Creating collection 'new_shifts'.");
+				db.createCollection('new_shifts');
+			}
+		});
+		//findUsers(db,function(){
+
+		//});
+		//getShifts(db,function(){
+
+		//});
+	});
+}
 var app = express();
 
 app.set('trust proxy', 1);
@@ -119,20 +123,20 @@ app.set('trust proxy', 1);
 var authCheck = function(req,res,next){
    var token = req.session.tok;
    var uid = req.session.uid;
-   
+
    if(!token){
-       req.session.error = 'Access denied!';
-       res.redirect('/');
+	   req.session.error = 'Access denied!';
+	   res.redirect('/');
    } else {
-       // Check token and user id against DB before continuing.
-       console.log("Auth Check Successful");
-       next();
+	   // Check token and user id against DB before continuing.
+	   console.log("Auth Check Successful");
+	   next();
    }
 };
 app.use(session(
 {
     resave: false,
-    secret: 'hobbit',
+    secret: 'lkjfskdoinsaopdmposiansdoimvzxcoi',
     proxy: true,
     saveUninitialized: false
 }));
@@ -227,37 +231,39 @@ app.post('/login', function(req,res,next) {
 
 });
 app.post('/shifts',function(req,res,next){
-	
-	mdb.collection('new_shifts').replaceOne({'date':req.body.shift.date,'user_id':req.body.shift.user_id},req.body.shift,
-		function(err,result){
-			assert.equal(err,null);
-			console.log("Updated new shift");
-			if(result.result.nModified){
-				res.end();
-			} else {
-				mdb.collection('new_shifts').insertOne(req.body.shift,
-					function(err,result){
-						assert.equal(err,null);
-						console.log("Inserted new shift");
-						res.end();
-					});
-			}
-			delete shifts;
-			shifts = [];
-			getShifts(mdb,function(shift){
-				shifts.push(shift);
-			},function(){
+	if(dbConfig.enabled){
+		mdb.collection('new_shifts').replaceOne({'date':req.body.shift.date,'user_id':req.body.shift.user_id},req.body.shift,
+			function(err,result){
+				assert.equal(err,null);
+				console.log("Updated new shift");
+				if(result.result.nModified){
+					res.end();
+				} else {
+					mdb.collection('new_shifts').insertOne(req.body.shift,
+						function(err,result){
+							assert.equal(err,null);
+							console.log("Inserted new shift");
+							res.end();
+						});
+				}
+				delete shifts;
+				shifts = [];
+				getShifts(mdb,function(shift){
+					shifts.push(shift);
+				},function(){
 
-			});
-	});
+				});
+		});
+	}
 });
 app.post('/users',function(req,res,next){
-	
-	updateUser(mdb,req.cookies.uid,req.body.user,function(result){
-		console.log(result.result);
-		res.status('200');
-		res.end();
-	});
+	if(dbConfig.enabled){
+		updateUser(mdb,req.cookies.uid,req.body.user,function(result){
+			console.log(result.result);
+			res.status('200');
+			res.end();
+		});
+	}
 });
 
 ////////////////////////
@@ -265,21 +271,23 @@ app.post('/users',function(req,res,next){
 //////////////////////
 
 app.delete('/shifts/:user_id/:date',function(req,res,next){
-	mdb.collection('new_shifts').deleteMany({
-		'user_id': parseInt(req.params.user_id),
-		'date': req.params.date
-	},function(err,results){
-		assert.equal(err,null);
-		
-		console.log("Deleted new shift.");
-		shifts.forEach(function(shift,index,shts){
-			if(shift.user_id === parseInt(req.params.user_id) && shift.date === req.params.date){
-				delete shift;
-				shifts.splice(index,1);
-			}
+	if(dbConfig.enabled){
+		mdb.collection('new_shifts').deleteMany({
+			'user_id': parseInt(req.params.user_id),
+			'date': req.params.date
+		},function(err,results){
+			assert.equal(err,null);
+
+			console.log("Deleted new shift.");
+			shifts.forEach(function(shift,index,shts){
+				if(shift.user_id === parseInt(req.params.user_id) && shift.date === req.params.date){
+					delete shift;
+					shifts.splice(index,1);
+				}
+			});
+			res.end();
 		});
-		res.end();
-	});
+	}
 });
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
