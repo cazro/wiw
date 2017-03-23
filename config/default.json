@@ -4,5 +4,8 @@
 		"port":27017,
 		"host":"localhost",
 		"db":"wiw"
-	}
+	},
+    "server":{
+        "port":4000
+    }
 }
