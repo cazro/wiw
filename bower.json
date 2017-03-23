@@ -29,8 +29,6 @@
     "angular-messages": "^1.5.9",
     "angular-resource": "^1.5.9",
     "angular-sanitize": "^1.5.9",
-    "angular-ui-bootstrap": "^2.3.0",
-    "angular-ui-grid": "ui-grid#^3.2.1",
     "angular-ui-router": "^0.3.2",
     "jquery": "^3.1.1",
     "jquery-ui": "^1.12.1",
