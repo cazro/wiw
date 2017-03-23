@@ -28,7 +28,7 @@
 	</table>
 	
 	<uib-accordion close-others="closeOthers" ng-if ="!loading" ng-cloak>
-		<uib-accordion-group is-open="isOpen" ng-repeat="week in Schedule.weeks">   
+		<div uib-accordion-group is-open="isOpen" ng-repeat="week in Schedule.weeks">   
 			<uib-accordion-heading>
 				<md-button>
 					<h4 class = "md-subhead headings" title="{{isOpen?'Click to hide.':'Click to expand.'}}">Week of {{week.start | date:"MMM d"}} - {{week.end | date:"MMM d"}}</h3>
@@ -77,7 +77,7 @@
 					</tr>
 				</tbody>
 			</table>	
-		</uib-accordion-group>
+        </div>
 	</uib-accordion>
 	<div class="bottom-fill"></div>
 	<table ng-if ="!loading" id="CountTableFixed" class="table shift-table table-bordered table-condensed md-primary">
