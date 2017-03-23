@@ -525,10 +525,16 @@ wiwApp.controller('SchedCtrl',[
 					
 				},function(err){
 					console.log(err);
+                    
+                    $cookies.remove('uid');
+                    $cookies.remove('tok');
+                    
 					$state.go('login');
 				});
 			},
             function(err){
+                $cookies.remove('uid');
+                $cookies.remove('tok');
                 console.log(err);
                 $state.go('login');
             });
@@ -561,6 +567,8 @@ wiwApp.controller('SchedCtrl',[
 						}
 					}
 				},function(err){
+                    $cookies.remove('uid');
+                    $cookies.remove('tok');
 					console.log(err);
 					$state.go('login');
 				});
