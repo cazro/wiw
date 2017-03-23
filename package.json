@@ -21,8 +21,20 @@
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0",
     "sprintf-js": "^1.0.3",
-    "angular-ui-grid": "^3.2.3",
-    "angular-ui-bootstrap": "^2.3.0"
+    "angular": "^1.5.9",
+    "angular-animate": "^1.5.9",
+    "angular-aria": "^1.5.9",
+    "angular-bootstrap-contextmenu": "^0.9.9",
+    "angular-cookies": "^1.5.9",
+    "angular-material": "^1.1.1",
+    "angular-material-icons": "^0.7.1",
+    "angular-messages": "^1.5.9",
+    "angular-resource": "^1.5.9",
+    "angular-sanitize": "^1.5.9",
+    "angular-ui-router": "^0.3.2",
+    "jquery": "^3.1.1",
+    "jquery-ui": "^1.12.1",
+    "bootstrap": "^3.3.7"
   },
   "devDependencies": {
     "grunt": "^1.0.1",
