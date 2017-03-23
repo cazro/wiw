@@ -22,8 +22,7 @@
     "serve-favicon": "~2.3.0",
     "sprintf-js": "^1.0.3",
     "angular-ui-grid": "ui-grid#^3.2.1",
-    "angular-ui-bootstrap": "^2.3.0",
-
+    "angular-ui-bootstrap": "^2.3.0"
   },
   "devDependencies": {
     "grunt": "^1.0.1",
