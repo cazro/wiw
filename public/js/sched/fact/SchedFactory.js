@@ -57,6 +57,9 @@ wiwApp.factory('SchedFactory',
 			blocks: $resource('https://api.wheniwork.com/2/blocks',
 			null,null),
 			
+            requests: $resource('https://api.wheniwork.com/2/requests',
+            null,null),
+            
 			user_settings: $resource('/users',
 			null,
 			{
