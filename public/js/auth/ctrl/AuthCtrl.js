@@ -58,6 +58,7 @@ wiwApp.controller('AuthCtrl',
                     $state.go('login');
             };
             if($cookies.get('uid') && $cookies.get('tok') ){
+                $scope.logginIn = false;
                 $rootScope.user = {};
                 $rootScope.user.user = {};
                 $rootScope.user.user.id = $cookies.get('uid');
