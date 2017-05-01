@@ -10,7 +10,8 @@ wiwApp.controller('SchedCtrl',[
     '$mdDialog', 
     '$mdMedia',
     '$filter',
-    function(SchedFactory,AuthFactory,$rootScope, $scope, $cookies, $state, $mdDialog, $mdMedia,$filter){
+    '$interval',
+    function(SchedFactory,AuthFactory,$rootScope, $scope, $cookies, $state, $mdDialog, $mdMedia,$filter,$interval){
 		
         /*
          *  LOCAL VARIABLES 
