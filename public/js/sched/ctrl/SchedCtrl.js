@@ -72,7 +72,7 @@ wiwApp.controller('SchedCtrl',[
          */
         function update(){
             construct(function(){
-                    getUser(getUsers);
+                getUser(getUsers);
             });
 
         }
@@ -81,32 +81,32 @@ wiwApp.controller('SchedCtrl',[
                 $scope.Schedule.users[b].numShifts = 0;
             }
 
-                for(var k in  $scope.Schedule.weeks){
+            for(var k in  $scope.Schedule.weeks){
 
-                        for(var j in  $scope.Schedule.weeks[k].days){
+                for(var j in  $scope.Schedule.weeks[k].days){
 
-                                $scope.Schedule.weeks[k].days[j].Day = 0;
-                                $scope.Schedule.weeks[k].days[j].Afternoon = 0;
+                    $scope.Schedule.weeks[k].days[j].Day = 0;
+                    $scope.Schedule.weeks[k].days[j].Afternoon = 0;
 
-                                for(var i in $scope.Schedule.weeks[k].days[j].shifts){
-                                        if($scope.Schedule.weeks[k].days[j].shifts[i].id || $scope.Schedule.weeks[k].days[j].shifts[i].selected_pos){
-                                                var shiftStart;
-                                                if(showPubUnpub($scope.Schedule.weeks[k].days[j].shifts[i].published))$scope.Schedule.users[xusers[$scope.Schedule.weeks[k].days[j].shifts[i].user_id]].numShifts++;
+                    for(var i in $scope.Schedule.weeks[k].days[j].shifts){
+                        if($scope.Schedule.weeks[k].days[j].shifts[i].id || $scope.Schedule.weeks[k].days[j].shifts[i].selected_pos){
+                            var shiftStart;
+                            if(showPubUnpub($scope.Schedule.weeks[k].days[j].shifts[i].published))$scope.Schedule.users[xusers[$scope.Schedule.weeks[k].days[j].shifts[i].user_id]].numShifts++;
 
-                                                shiftStart = new Date($scope.Schedule.weeks[k].days[j].shifts[i].start_time);
+                            shiftStart = new Date($scope.Schedule.weeks[k].days[j].shifts[i].start_time);
 
-                                                        //COUNTING SHIFTS IN A DAY
-                                                if($scope.Schedule.weeks[k].days[j].shifts[i].position.name !== 'TRAVEL' && showPubUnpub($scope.Schedule.weeks[k].days[j].shifts[i].published)){
-                                                        if(shiftStart.getHours() < shiftCutoff){
-                                                                $scope.Schedule.weeks[k].days[j].Day++;
-                                                        } else {
-                                                                $scope.Schedule.weeks[k].days[j].Afternoon++;
-                                                        }
-                                                }	
-                                        }
+                                    //COUNTING SHIFTS IN A DAY
+                            if($scope.Schedule.weeks[k].days[j].shifts[i].position.name !== 'TRAVEL' && showPubUnpub($scope.Schedule.weeks[k].days[j].shifts[i].published)){
+                                if(shiftStart.getHours() < shiftCutoff){
+                                        $scope.Schedule.weeks[k].days[j].Day++;
+                                } else {
+                                        $scope.Schedule.weeks[k].days[j].Afternoon++;
                                 }
+                            }	
                         }
-                }/*
+                    }
+                }
+            }/*
 			setTimeout(function(){
 				
 				$scope.$apply();
@@ -751,10 +751,14 @@ wiwApp.controller('SchedCtrl',[
 			
 			token = $cookies.get('tok');
 			user_id = $cookies.get('uid');
-						
+			
 			construct(function(){
 				getUser(getUsers);			
 			});
+            
+            $interval(function(){
+                getUsers(getShifts);
+            },21600000);
 		
         } else {
             $state.go('login');
