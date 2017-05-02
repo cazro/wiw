@@ -24,25 +24,26 @@ wiwApp.controller('SchedCtrl',[
         var user_id;
         var dbNewShifts;
         var numWeeks = 5;
+        var menuEv;
+        
         var xusers = {};
         var xpos = {};
         var xblocks = {};
-        var menuEv;
+        
         var now = new Date();
+        
         var start =  new Date(
-                now.getFullYear(),
-                now.getMonth(),
-                now.getDate(),
-                05,00,00);
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate(),
+            05,00,00);
+                
         var end = new Date(
             now.getFullYear(),
             now.getMonth(),
             now.getDate()+(7*numWeeks), 23,59,58
         );
-        //var Schedule = {};
-
-        //Schedule.weeks = [];
-
+    
         /*
          *  SCOPE VARIABLES
          */
@@ -66,256 +67,8 @@ wiwApp.controller('SchedCtrl',[
 
         $scope.showInfo = showInfo;
         $scope.getGrad = getGrad;
-
-        /*
-         * 
-         * @returns {undefined}
-         */
-        function update(){
-            construct(function(){
-                getUser(getUsers);
-            });
-
-        }
-        var reCalc = function(){
-            for(var b in $scope.Schedule.users){
-                $scope.Schedule.users[b].numShifts = 0;
-            }
-
-            for(var k in  $scope.Schedule.weeks){
-
-                for(var j in  $scope.Schedule.weeks[k].days){
-
-                    $scope.Schedule.weeks[k].days[j].Day = 0;
-                    $scope.Schedule.weeks[k].days[j].Afternoon = 0;
-
-                    for(var i in $scope.Schedule.weeks[k].days[j].shifts){
-                        if($scope.Schedule.weeks[k].days[j].shifts[i].id || $scope.Schedule.weeks[k].days[j].shifts[i].selected_pos){
-                            var shiftStart;
-                            if(showPubUnpub($scope.Schedule.weeks[k].days[j].shifts[i].published))$scope.Schedule.users[xusers[$scope.Schedule.weeks[k].days[j].shifts[i].user_id]].numShifts++;
-
-                            shiftStart = new Date($scope.Schedule.weeks[k].days[j].shifts[i].start_time);
-
-                                    //COUNTING SHIFTS IN A DAY
-                            if($scope.Schedule.weeks[k].days[j].shifts[i].position.name !== 'TRAVEL' && showPubUnpub($scope.Schedule.weeks[k].days[j].shifts[i].published)){
-                                if(shiftStart.getHours() < shiftCutoff){
-                                        $scope.Schedule.weeks[k].days[j].Day++;
-                                } else {
-                                        $scope.Schedule.weeks[k].days[j].Afternoon++;
-                                }
-                            }	
-                        }
-                    }
-                }
-            }/*
-			setTimeout(function(){
-				
-				$scope.$apply();
-				
-			},200); */
-		};
-		/*
-		 * SCOPE FUNCTIONS
-		 * 
-		*/
-	   
-	   /*
-		* 
-		* @param {type} id
-		* @returns {undefined}
-		*/
-	   $scope.changeLoc = function(id){
-		   if($rootScope.user.location !== id){
-			$rootScope.user.location = id;
-			construct(function(){
-				 getUsers(getShifts);
-			 });
-		 }
-		 
-	   };
-	   $scope.changePub = function(){
-		   $scope.showUnpub = !$scope.showUnpub;
-//		   construct(function(){
-//				getUsers(getShifts);
-//				
-//			});
-			reCalc();
-	   };
-	   $scope.dateChange = function(){
-			construct(function(){
-				getUsers(getShifts);
-			});
-		};
-		$scope.formatAvatar = function(url){
-			return sprintf(url,'sm');
-		};
-		function showPubUnpub(published){
-		   return ($scope.showUnpub || published);
-		};
-		 $scope.showPubUnpub = showPubUnpub;
-	   /*
-		* 
-		* @param {type} id
-		* @returns {String}
-		*/
-		$scope.getUserByID = function(id){
-			for(var i in $scope.Schedule.users){
-				if($scope.Schedule.users[i].id === id){
-					return $scope.Schedule.users[i].first_name+' '+$scope.Schedule.users[i].last_name;
-				}
-			}
-		};
-		$scope.getSettings = function(shift,type){
-			if($rootScope.user.settings){
-				var settings = Object.getOwnPropertyNames($rootScope.user.settings);
-			} else {
-				var settings = [];
-			}
-		
-			var ret = {};
-			if(shift.selected_pos){
-				ret['border-color'] = '#'+shift.selected_pos.color;
-			} else {
-				ret['border-color'] = '#ccc';
-			}
-			for(var i in settings){
-				var split = settings[i].split('-');
-				if(split[0] === type){
-					ret[split[1]+'-'+split[2]] = $rootScope.user.settings[settings[i]]; 
-				}
-			}
-			
-			return ret;
-		};
-		$scope.showSettings = function(ev){
-			
-			var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
-			$mdDialog.show({
-				controller: SettingsCtrl,
-				templateUrl: 'html/user/settings.html',
-				parent: angular.element(document.body),
-				targetEvent: ev,
-				clickOutsideToClose:false,
-				fullscreen: useFullScreen,
-				locals:{
-				  user: $rootScope.user,
-				  SchedFactory: SchedFactory
-				}
-			})
-			.then(function(answer) {
-			  $scope.status = 'You said the information was "' + answer + '".';
-			}, function() {
-			  $scope.status = 'You cancelled the dialog.';
-			});
-			$scope.$watch(function() {
-			  return $mdMedia('xs') || $mdMedia('sm');
-			}, function(wantsFullScreen) {
-			  $scope.customFullscreen = (wantsFullScreen === true);
-			});
-		};
-	   /*
-		* showInfo
-		* @param {type} ev
-		* @returns {undefined}
-		*/
-		function showInfo(ev,shift) {
-			var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
-			$mdDialog.show({
-			  controller: DialogController,
-			  templateUrl: 'html/sched/shInfo.html',
-			  parent: angular.element(document.body),
-			  targetEvent: ev,
-			  clickOutsideToClose:true,
-			  fullscreen: useFullScreen,
-			  locals:{
-				  shift: shift,
-				  user: $scope.Schedule.users[xusers[shift.user_id]],
-				  creator: $scope.Schedule.users[xusers[shift.creator_id]]
-			  }
-			})
-			.then(function(answer) {
-			  $scope.status = 'You said the information was "' + answer + '".';
-			}, function() {
-			  $scope.status = 'You cancelled the dialog.';
-			});
-			$scope.$watch(function() {
-			  return $mdMedia('xs') || $mdMedia('sm');
-			}, function(wantsFullScreen) {
-			  $scope.customFullscreen = (wantsFullScreen === true);
-			});
-		};
-		
-		
-		/*
-		 * getGrad
-		 * @param {type} color
-		 * @returns {SchedCtrl_L9.$scope.getGrad.obj_nocol|SchedCtrl_L9.$scope.getGrad.obj_col}
-		 */
-		function getGrad(color)
-		{
-			if(color)
-			{
-				var r = parseInt(color.substring(0,2),16);
-				var g = parseInt(color.substring(2,4),16);
-				var b = parseInt(color.substring(4,6),16);
-			}
-			var obj_col = {
-				'background': 'rgba('+r+','+g+','+b+',.7)',
-				'background': 'radial-gradient(rgba(220,220,220,1),rgba('+r+','+g+','+b+',1))',
-				'background': '-webkit-radial-gradient(rgba(220,220,220,1),rgba('+r+','+g+','+b+',1))'
-				
-			};
-			var obj_nocol = {
-				'background': 'rgba(196,224,71,.7)',
-				'background': 'radial-gradient(rgba(196,224,71,.5),rgba(196,224,71,.8))',
-				'background': '-webkit-radial-gradient(rgba(196,224,71,.5),rgba(196,224,71,.8))'
-				
-			};
-			return color ? obj_col :obj_nocol;
-		};
-		
-		
-		$scope.getDate = function(date,time){
-			
-			return new Date(new Date().getFullYear(),
-				new Date().getMonth(),
-				new Date().getDate()
-				,date.split(':')[0],
-				date.split(':')[1],
-				date.split(':')[2]);
-			
-		};
-		$scope.createShifts = function(){
-			
-			for(var i in $scope.Schedule.newShifts.shifts){
-				var shift = $scope.Schedule.newShifts.shifts[i];
-				if(shift){
-					SchedFactory.new_shifts.save(
-					{
-						'shift':shift
-					},
-					function(result){
-						console.log(result);
-					});
-				}
-			}
-			for(var i in $scope.Schedule.newShifts.removed){
-				var del = $scope.Schedule.newShifts.removed[i];
-				if(del){
-					SchedFactory.new_shifts.remove(
-					{
-						'user_id':parseInt(del['user_id']),
-						'date':del['date']
-					},
-					function(result){
-						console.log(result);
-						delete $scope.Schedule.newShifts.removed[i];
-					});
-				}
-			}
-			
-		};
-		var addShift = function(shift,shift_date,sh,d,wk){
+        
+        var addShift = function(shift,shift_date,sh,d,wk){
 		
 			var newShift = {};
 
@@ -392,8 +145,8 @@ wiwApp.controller('SchedCtrl',[
 
 			}
 		};
-		$scope.addShift = addShift;
-		/*
+        
+        /*
 		 * construct
 		 * @param {function} getUser
 		 * @returns {void}
@@ -473,8 +226,74 @@ wiwApp.controller('SchedCtrl',[
 				next();
 			}
 		};
+        
+        /*
+		 * final
+		 * @returns {void}
+		 */
+		var final = function(){
+			//$scope.Schedule.weeks =	Schedule.weeks;
+			//console.log(new Date().getSeconds()+'.'+new Date().getMilliseconds());
+			
+			setTimeout(function(){
+				if($rootScope.user.role < 3)$scope.showUnpub = true;
+				$scope.loading = false;
+				$scope.$apply();
+			},500);
 		
-		/*
+		};
+		
+        /*
+		 * getGrad
+		 * @param {type} color
+		 * @returns {SchedCtrl_L9.$scope.getGrad.obj_nocol|SchedCtrl_L9.$scope.getGrad.obj_col}
+		 */
+		function getGrad(color)
+		{
+			if(color)
+			{
+				var r = parseInt(color.substring(0,2),16);
+				var g = parseInt(color.substring(2,4),16);
+				var b = parseInt(color.substring(4,6),16);
+			}
+			var obj_col = {
+				'background': 'rgba('+r+','+g+','+b+',.7)',
+				'background': 'radial-gradient(rgba(220,220,220,1),rgba('+r+','+g+','+b+',1))',
+				'background': '-webkit-radial-gradient(rgba(220,220,220,1),rgba('+r+','+g+','+b+',1))'
+				
+			};
+			var obj_nocol = {
+				'background': 'rgba(196,224,71,.7)',
+				'background': 'radial-gradient(rgba(196,224,71,.5),rgba(196,224,71,.8))',
+				'background': '-webkit-radial-gradient(rgba(196,224,71,.5),rgba(196,224,71,.8))'
+				
+			};
+			return color ? obj_col :obj_nocol;
+		};
+        
+        /*
+		 * getShifts
+		 * @param {int} m
+		 * @param {int} id
+		 * @param {function} final
+		 * @returns {void}
+		 */
+		var getShifts = function(m,id){
+			
+			SchedFactory.shifts.get(
+			{
+				'start': $scope.Schedule.start,
+				'end':  $scope.Schedule.end,
+				'user_id': id,
+				'unpublished': true,
+				'W-Token': token
+			},function(obj){
+				
+				placeShifts(m,obj.shifts);				
+			});
+		};
+		
+        /*
 		 * getUser
 		 * @param {function} getUsers
 		 * @returns {void}
@@ -492,27 +311,27 @@ wiwApp.controller('SchedCtrl',[
 				$rootScope.user.location = data.locations[0].id;
 				
 				AuthFactory.authSesh.authed(
-				  {
+				{
 					  'uid': user_id,
 					  'tok': token
-				  },
-				  function(res){ 
-						SchedFactory.user_settings.get(null,function(result){
-							
-							if(result.settings){
-								$rootScope.user.settings = result.settings;
-							} else {
-								$rootScope.user.settings = {};
-							}
-						});
-						
-						SchedFactory.new_shifts.get(null,function(data){
-							var result = data.shifts;
-							
-							dbNewShifts = result;
-							
-						});
-					});
+				},
+                function(res){ 
+                    SchedFactory.user_settings.get(null,function(result){
+
+                        if(result.settings){
+                            $rootScope.user.settings = result.settings;
+                        } else {
+                            $rootScope.user.settings = {};
+                        }
+                    });
+
+                    SchedFactory.new_shifts.get(null,function(data){
+                        var result = data.shifts;
+
+                        dbNewShifts = result;
+
+                    });
+                });
 				getUsers(getShifts);
 				
 				// GET LOCATIONS
@@ -622,9 +441,8 @@ wiwApp.controller('SchedCtrl',[
 				console.log(err);
 				$state.go('login');
 			});
-			
-			
 		};
+        
 		var placeShifts = function(u,shifts){
 			for(var p in dbNewShifts){
 				shifts.push(dbNewShifts[p]);
@@ -697,43 +515,219 @@ wiwApp.controller('SchedCtrl',[
 				final();
 			}
 		};
-		/*
-		 * getShifts
-		 * @param {int} m
-		 * @param {int} id
-		 * @param {function} final
-		 * @returns {void}
-		 */
-		var getShifts = function(m,id){
-			
-			SchedFactory.shifts.get(
-			{
-				'start': $scope.Schedule.start,
-				'end':  $scope.Schedule.end,
-				'user_id': id,
-				'unpublished': true,
-				'W-Token': token
-			},function(obj){
-				
-				placeShifts(m,obj.shifts);				
+        
+        var reCalc = function(){
+            for(var b in $scope.Schedule.users){
+                $scope.Schedule.users[b].numShifts = 0;
+            }
+
+            for(var k in  $scope.Schedule.weeks){
+
+                for(var j in  $scope.Schedule.weeks[k].days){
+
+                    $scope.Schedule.weeks[k].days[j].Day = 0;
+                    $scope.Schedule.weeks[k].days[j].Afternoon = 0;
+
+                    for(var i in $scope.Schedule.weeks[k].days[j].shifts){
+                        if($scope.Schedule.weeks[k].days[j].shifts[i].id || $scope.Schedule.weeks[k].days[j].shifts[i].selected_pos){
+                            var shiftStart;
+                            if(showPubUnpub($scope.Schedule.weeks[k].days[j].shifts[i].published))$scope.Schedule.users[xusers[$scope.Schedule.weeks[k].days[j].shifts[i].user_id]].numShifts++;
+
+                            shiftStart = new Date($scope.Schedule.weeks[k].days[j].shifts[i].start_time);
+
+                                    //COUNTING SHIFTS IN A DAY
+                            if($scope.Schedule.weeks[k].days[j].shifts[i].position.name !== 'TRAVEL' && showPubUnpub($scope.Schedule.weeks[k].days[j].shifts[i].published)){
+                                if(shiftStart.getHours() < shiftCutoff){
+                                        $scope.Schedule.weeks[k].days[j].Day++;
+                                } else {
+                                        $scope.Schedule.weeks[k].days[j].Afternoon++;
+                                }
+                            }	
+                        }
+                    }
+                }
+            }
+		};
+        /*
+		* showInfo
+		* @param {type} ev
+		* @returns {undefined}
+		*/
+		function showInfo(ev,shift) {
+			var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
+			$mdDialog.show({
+			  controller: DialogController,
+			  templateUrl: 'html/sched/shInfo.html',
+			  parent: angular.element(document.body),
+			  targetEvent: ev,
+			  clickOutsideToClose:true,
+			  fullscreen: useFullScreen,
+			  locals:{
+				  shift: shift,
+				  user: $scope.Schedule.users[xusers[shift.user_id]],
+				  creator: $scope.Schedule.users[xusers[shift.creator_id]]
+			  }
+			})
+			.then(function(answer) {
+			  $scope.status = 'You said the information was "' + answer + '".';
+			}, function() {
+			  $scope.status = 'You cancelled the dialog.';
 			});
-		};
+			$scope.$watch(function() {
+			  return $mdMedia('xs') || $mdMedia('sm');
+			}, function(wantsFullScreen) {
+			  $scope.customFullscreen = (wantsFullScreen === true);
+			});
+		}
+        
+        function showPubUnpub(published){
+		   return ($scope.showUnpub || published);
+		}
+
+		/******************************* 
+         *******************************
+		 ****** SCOPE FUNCTIONS  *******
+		 *******************************
+		 *******************************/
+	   
+		$scope.addShift = addShift;
 		
-		/*
-		 * final
-		 * @returns {void}
-		 */
-		var final = function(){
-			//$scope.Schedule.weeks =	Schedule.weeks;
-			//console.log(new Date().getSeconds()+'.'+new Date().getMilliseconds());
+        /*
+         * 
+         * @param {type} id
+         * @returns {undefined}
+         */
+        $scope.changeLoc = function(id){
+            if($rootScope.user.location !== id){
+             $rootScope.user.location = id;
+             construct(function(){
+                  getUsers(getShifts);
+              });
+          }
+
+        };
+        
+        $scope.changePub = function(){
+            $scope.showUnpub = !$scope.showUnpub;
+            reCalc();
+        };
+        
+		$scope.createShifts = function(){
 			
-			setTimeout(function(){
-				if($rootScope.user.role < 3)$scope.showUnpub = true;
-				$scope.loading = false;
-				$scope.$apply();
-			},500);
-		
+			for(var i in $scope.Schedule.newShifts.shifts){
+				var shift = $scope.Schedule.newShifts.shifts[i];
+				if(shift){
+					SchedFactory.new_shifts.save(
+					{
+						'shift':shift
+					},
+					function(result){
+						console.log(result);
+					});
+				}
+			}
+			for(var i in $scope.Schedule.newShifts.removed){
+				var del = $scope.Schedule.newShifts.removed[i];
+				if(del){
+					SchedFactory.new_shifts.remove(
+					{
+						'user_id':parseInt(del['user_id']),
+						'date':del['date']
+					},
+					function(result){
+						console.log(result);
+						delete $scope.Schedule.newShifts.removed[i];
+					});
+				}
+			}
+			
 		};
+        
+        $scope.dateChange = function(){
+             construct(function(){
+                 getUsers(getShifts);
+             });
+        };
+        
+		$scope.formatAvatar = function(url){
+			return sprintf(url,'sm');
+		};
+        
+        $scope.getDate = function(date,time){
+			
+			return new Date(new Date().getFullYear(),
+				new Date().getMonth(),
+				new Date().getDate()
+				,date.split(':')[0],
+				date.split(':')[1],
+				date.split(':')[2]);
+			
+		};
+        
+	   /*
+		* 
+		* @param {type} id
+		* @returns {String}
+		*/        
+		$scope.getSettings = function(shift,type){
+			if($rootScope.user.settings){
+				var settings = Object.getOwnPropertyNames($rootScope.user.settings);
+			} else {
+				var settings = [];
+			}
+		
+			var ret = {};
+			if(shift.selected_pos){
+				ret['border-color'] = '#'+shift.selected_pos.color;
+			} else {
+				ret['border-color'] = '#ccc';
+			}
+			for(var i in settings){
+				var split = settings[i].split('-');
+				if(split[0] === type){
+					ret[split[1]+'-'+split[2]] = $rootScope.user.settings[settings[i]]; 
+				}
+			}
+			
+			return ret;
+		};
+        
+        $scope.getUserByID = function(id){
+			for(var i in $scope.Schedule.users){
+				if($scope.Schedule.users[i].id === id){
+					return $scope.Schedule.users[i].first_name+' '+$scope.Schedule.users[i].last_name;
+				}
+			}
+		};
+        
+        $scope.showPubUnpub = showPubUnpub;
+        
+		$scope.showSettings = function(ev){
+			
+			var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
+			$mdDialog.show({
+				controller: SettingsCtrl,
+				templateUrl: 'html/user/settings.html',
+				parent: angular.element(document.body),
+				targetEvent: ev,
+				clickOutsideToClose:false,
+				fullscreen: useFullScreen,
+				locals:{
+				  user: $rootScope.user,
+				  SchedFactory: SchedFactory
+				}
+			})
+			.then(function(answer) {
+			  $scope.status = 'You said the information was "' + answer + '".';
+			}, function() {
+			  $scope.status = 'You cancelled the dialog.';
+			});
+			$scope.$watch(function() {
+			  return $mdMedia('xs') || $mdMedia('sm');
+			}, function(wantsFullScreen) {
+			  $scope.customFullscreen = (wantsFullScreen === true);
+			});
+		};			
 		
 		/*****************
 		/*
@@ -767,14 +761,12 @@ wiwApp.controller('SchedCtrl',[
 		
 		setTimeout(function(){
 			console.log($scope);
-			
 		},1000);
     }
 ]);
 function SettingsCtrl ($rootScope, $scope, $mdDialog, user,SchedFactory){
 		var previous = angular.copy($rootScope.user.settings);
 		$scope.user = user;
-		
 		
 		$scope.Manager = [
 			{
