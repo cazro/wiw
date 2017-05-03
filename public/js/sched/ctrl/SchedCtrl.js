@@ -583,7 +583,12 @@ wiwApp.controller('SchedCtrl',[
         function showPubUnpub(published){
 		   return ($scope.showUnpub || published);
 		}
-
+        
+        function update(){
+            construct(function(){
+				getUser(getUsers);			
+			});
+        }
 		/******************************* 
          *******************************
 		 ****** SCOPE FUNCTIONS  *******
@@ -747,13 +752,9 @@ wiwApp.controller('SchedCtrl',[
 			token = $cookies.get('tok');
 			user_id = $cookies.get('uid');
 			
-			construct(function(){
-				getUser(getUsers);			
-			});
+			update();
             
-            $interval(function(){
-                getUsers(getShifts);
-            },21600000);
+            $interval(update,10800000);
 		
         } else {
             $state.go('login');
