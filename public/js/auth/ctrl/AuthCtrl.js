@@ -11,7 +11,9 @@ wiwApp.controller('AuthCtrl',
 			$scope.showLogin = false;
 			$scope.loggingIn = false;
             $scope.chooseAccount = false;
-			$scope.chosenAccountID = 0;
+			$scope.user = {
+				chosenAccountID:0
+			}
 			
             $scope.login = function(){
                 $scope.loggingIn = true;
@@ -62,9 +64,9 @@ wiwApp.controller('AuthCtrl',
                 },45000);
             };
 			$scope.continueLogin = function(){
-				console.log($scope.chosenAccountID);
+				console.log($scope.user.chosenAccountID);
 				for(var u in $scope.users){
-					if($scope.users[u].account_id === $scope.chosenAccountID){
+					if($scope.users[u].account_id === $scope.user.chosenAccountID){
 						$cookies.put('uid',$scope.users[u].id);
 						$cookies.put('tok',$rootScope.user.login.token);
 
