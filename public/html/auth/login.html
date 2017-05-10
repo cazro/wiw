@@ -26,8 +26,8 @@
                 <div layout="row"  layout-padding layout-fill class="md-warn" layout-align="center center">
                     <p class="md-caption md-warn">Please choose which account you want to use.</p>
                 </div>
-                <md-input-container layout-fill>
-                  <p ng-repeat="account in accounts">
+                <md-input-container ng-repeat="account in accounts" layout-fill>
+                  <p>
 					  <input type="radio" name="acct" ng-model="user.chosenAccountID" ng-value="account.id">{{account.company}}
 				  </p>
                 
