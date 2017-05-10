@@ -10,7 +10,8 @@ wiwApp.controller('AuthCtrl',
 			
 			$scope.showLogin = false;
 			$scope.loggingIn = false;
-            
+            $scope.chooseAccount = false;
+			
             $scope.login = function(){
                 $scope.loggingIn = true;
                 var resource = AuthFactory.wiwLogin;
@@ -23,22 +24,30 @@ wiwApp.controller('AuthCtrl',
                 },
                 function(resData){
                     $scope.User.pass = resData.login.token;
+					
                     console.log("Auth from WIW success");
-                    
-                    $cookies.put('uid',resData.user.id);
-                    $cookies.put('tok',resData.login.token);
-                    
-                    $rootScope.user = resData;
-                    
-                    AuthFactory.authSesh.authed(
-                    {
-                        'uid': resData.user.id,
-                        'tok': resData.login.token
-                    },
-                    function(res){
-                        
-                        $state.go('schedule');
-                    });
+					
+					$rootScope.user = resData;
+                    if(resData.user){
+						$cookies.put('uid',resData.user.id);
+						$cookies.put('tok',resData.login.token);
+
+						AuthFactory.authSesh.authed(
+						{
+							'uid': resData.user.id,
+							'tok': resData.login.token
+						},
+						function(res){
+
+							$state.go('schedule');
+						});
+					} else {
+						if(resData.users){
+							$scope.accounts = resData.accounts;
+							$scope.chooseAcccount = true;
+							$scope.users = resData.users;
+						}
+					}
                 },
                 function(response){
                     if(response){
@@ -51,7 +60,27 @@ wiwApp.controller('AuthCtrl',
                     $scope.loggingIn = false;
                 },45000);
             };
-			
+			$scope.continueLogin = function(){
+				for(var u in $scope.users){
+					if($scope.users[u].account_id === $scope.chosenAccountID){
+						$cookies.put('uid',$scope.users[u].id);
+						$cookies.put('tok',$rootScope.user.login.token);
+
+						$rootScope.user.user = $scope.users[u];
+
+						AuthFactory.authSesh.authed(
+						{
+							'uid': $scope.users[u].id,
+							'tok': $rootScope.user.login.token
+						},
+						function(res){
+
+							$state.go('schedule');
+						});
+					}
+					break;
+				}
+			};
             $scope.logout = function(){
                     $cookies.remove('uid');
                     $cookies.remove('tok');
