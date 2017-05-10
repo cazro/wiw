@@ -27,7 +27,7 @@
                     <p class="md-caption md-warn">Please choose which account you want to use.</p>
                 </div>
                 <md-input-container ng-repeat="account in accounts" layout-fill>
-                   <p class="md-caption"><span><input type="radio" name="acct" ng-model="chosenAccountID" ng-value="account.id">{{account.company}}</span></p>
+                  <span><input type="radio" name="acct" ng-model="chosenAccountID" ng-value="account.id">{{account.company}}</span>
                 
                 </md-input-container>
                 

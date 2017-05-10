@@ -61,6 +61,7 @@ wiwApp.controller('AuthCtrl',
                 },45000);
             };
 			$scope.continueLogin = function(){
+				console.log($scope.chosenAccountID);
 				for(var u in $scope.users){
 					if($scope.users[u].account_id === $scope.chosenAccountID){
 						$cookies.put('uid',$scope.users[u].id);
