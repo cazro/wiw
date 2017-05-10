@@ -44,7 +44,7 @@ wiwApp.controller('AuthCtrl',
 					} else {
 						if(resData.users){
 							$scope.accounts = resData.accounts;
-							$scope.chooseAcccount = true;
+							$scope.chooseAccount = true;
 							$scope.users = resData.users;
 						}
 					}
