@@ -15,7 +15,7 @@ wiwApp.controller('AuthCtrl',
             $scope.login = function(){
                 $scope.loggingIn = true;
                 var resource = AuthFactory.wiwLogin;
-                
+                console.log($scope.User);
                 resource.login(
                 {
                     username: $scope.User.email,
