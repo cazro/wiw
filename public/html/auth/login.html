@@ -7,8 +7,8 @@
         
     </div>
     <md-whiteframe layout-padding layout-margin class="md-whiteframe-3dp" flex="50">
-        <form ng-if="!chooseAccount" role='form' name = "LoginForm" id="LoginForm">
-            <div layout="column"  layout-align="space-between center">
+        <form role='form' name = "LoginForm" id="LoginForm">
+            <div ng-if="!chooseAccount" layout="column"  layout-align="space-between center">
                 <div layout="row"  layout-padding layout-fill class="md-warn" layout-align="center center">
                     <p id="logErr" class="md-caption md-warn">{{error}}</p>
                 </div>
@@ -22,9 +22,7 @@
                 </md-input-container>
                 <md-button layout-fill ng-click="login()" ng-disabled="loggingIn" type="submit" class=" md-raised md-primary logBut">Log In</md-button>
             </div>
-        </form>
-		<form ng-if="chooseAccount" role='form' name='ChooseAcct' id='ChooseAcct'>
-			<div layout="column"  layout-align="space-between center">
+			<div ng-if="chooseAccount" layout="column"  layout-align="space-between center">
                 <div layout="row"  layout-padding layout-fill class="md-warn" layout-align="center center">
                     <p class="md-caption md-warn">Please choose which account you want to use.</p>
                 </div>
@@ -33,9 +31,10 @@
                 
                 </md-input-container>
                 
-                <md-button layout-fill ng-click="continueLogin()" type="submit" class=" md-raised md-primary logBut">Continue</md-button>
+                <md-button layout-fill ng-click="continueLogin()" type="button" class=" md-raised md-primary logBut">Continue</md-button>
             </div>
-		</form>
+        </form>
+		
     </md-whiteframe>
     <div flex="25">
         <footer>
