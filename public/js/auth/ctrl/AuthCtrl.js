@@ -11,6 +11,7 @@ wiwApp.controller('AuthCtrl',
 			$scope.showLogin = false;
 			$scope.loggingIn = false;
             $scope.chooseAccount = false;
+			$scope.chosenAccountID = 0;
 			
             $scope.login = function(){
                 $scope.loggingIn = true;
