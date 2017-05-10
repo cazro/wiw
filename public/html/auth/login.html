@@ -24,7 +24,7 @@
             </div>
 		</form>
 		<form id="choose" name = "chooseForm">
-			<div ng-if="chooseAccount" layout="column"  layout-align="space-between center">
+			<div ng-show="chooseAccount" ng-hide="!chooseAccount" layout="column"  layout-align="space-between center">
                 <div layout="row"  layout-padding layout-fill class="md-warn" layout-align="center center">
                     <p class="md-caption md-warn">Please choose which account you want to use.</p>
                 </div>
