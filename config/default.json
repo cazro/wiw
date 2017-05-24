@@ -1,6 +1,6 @@
 {
 	"mongodb":{
-		"enabled":true,
+		"enabled":false,
 		"port":27017,
 		"host":"localhost",
 		"db":"wiw"

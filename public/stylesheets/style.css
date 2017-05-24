@@ -202,7 +202,9 @@ div.shift-name{
 	font-weight: bold;
 	color: rgba(20,20,20,1);
 }
-
+div.shift-name:first-child {
+    margin-bottom: 8px;
+}
 td a{
 	background-color:#FFFFFF;
 }

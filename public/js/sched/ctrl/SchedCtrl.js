@@ -450,11 +450,14 @@ wiwApp.controller('SchedCtrl',[
 			for(var k in $scope.Schedule.weeks){
 				
 				for(var d in $scope.Schedule.weeks[k].days){
+                    $scope.Schedule.weeks[k].days[d].shifts[u] = [];
 					if(shifts.length === 0){
-						$scope.Schedule.weeks[k].days[d].shifts[u] = {};
-						$scope.Schedule.weeks[k].days[d].shifts[u].user_id = $scope.Schedule.users[u].id;
-						$scope.Schedule.weeks[k].days[d].shifts[u].position = {};
-						$scope.Schedule.weeks[k].days[d].shifts[u].position.name = "";
+						$scope.Schedule.weeks[k].days[d].shifts[u].push({
+                            user_id : $scope.Schedule.users[u].id,
+                            position : {
+                                name : ""
+                            }
+                        });
 					}
 					for(var i in shifts){
 						// GET DATE STRING OF THE START TIME AS CREATED BY THE CONSTRUCT() FUNCTION
@@ -471,41 +474,53 @@ wiwApp.controller('SchedCtrl',[
 							var shiftStart = new Date(shift.start_time);
 
 							// STORE THE SHIFT IN THE CONSTRUCTED OBJECT
-							$scope.Schedule.weeks[k].days[d].shifts[u] = angular.copy(shift);
-							$scope.Schedule.weeks[k].days[d].shifts[u].start_time = new Date(shift.start_time);
-							$scope.Schedule.weeks[k].days[d].shifts[u].end_time = new Date(shift.end_time);
-							if($scope.Schedule.weeks[k].days[d].shifts[u].published)$scope.Schedule.weeks[k].days[d].shifts[u].published_date = new Date(shift.published_date);
-							if($scope.Schedule.weeks[k].days[d].shifts[u].acknowledged)$scope.Schedule.weeks[k].days[d].shifts[u].acknowledged_at = new Date(shift.acknowledged_at);
+                            var newShift = angular.copy(shift);
+							//$scope.Schedule.weeks[k].days[d].shifts[u] = angular.copy(shift);
+                            var newShiftArray = [];
+							newShift.start_time = new Date(shift.start_time);
+							newShift.end_time = new Date(shift.end_time);
+							if(newShift.published)newShift.published_date = new Date(shift.published_date);
+							if(newShift.acknowledged)newShift.acknowledged_at = new Date(shift.acknowledged_at);
 							if(!shift.selected_pos){
-								$scope.Schedule.weeks[k].days[d].shifts[u].position = xpos[shift.position_id];
+								newShift.position = xpos[shift.position_id];
 							}else{
 								addShift($scope.Schedule.weeks[k].days[d].shifts[u],myStart,u,d,k);
 							}
-
-							if(showPubUnpub($scope.Schedule.weeks[k].days[d].shifts[u].published))$scope.Schedule.users[u].numShifts++;
 							
 							//COUNTING SHIFTS IN A DAY
-							if($scope.Schedule.weeks[k].days[d].shifts[u].position.name !== 'TRAVEL' && showPubUnpub($scope.Schedule.weeks[k].days[d].shifts[u].published)){
-								if(shiftStart.getHours() < shiftCutoff){
+							if(newShift.position.name !== 'TRAVEL' && showPubUnpub(newShift.published)){
+								$scope.Schedule.users[u].numShifts++;
+                                if(shiftStart.getHours() < shiftCutoff){
 									$scope.Schedule.weeks[k].days[d].Day++;
 								} else {
 									$scope.Schedule.weeks[k].days[d].Afternoon++;
 								}
 							}
-
+                            
+                            $scope.Schedule.weeks[k].days[d].shifts[u].push(newShift);
+                            if($scope.Schedule.weeks[k].days[d].shifts[u].length > 1){
+                                $scope.Schedule.users[u].numShifts--;
+                            }
 							// REMOVE SHIFT
-							shifts.splice(i,1);
-							break;
+							//shifts.splice(i,1);
+							//break;
 
-						} else if(myStart !== theirStart || shifts.length === 0 ) {
+						} else if(myStart !== theirStart && $scope.Schedule.weeks[k].days[d].shifts[u].length === 0){
 							// SHIFT DOES NOT MATCH THE DATE
 							// CREATE BASIC OBJECT TO FILL SPACE
-							
-								$scope.Schedule.weeks[k].days[d].shifts[u] = {};
-								$scope.Schedule.weeks[k].days[d].shifts[u].user_id = shift.user_id;
-								$scope.Schedule.weeks[k].days[d].shifts[u].position = {};
-								$scope.Schedule.weeks[k].days[d].shifts[u].position.name = "";
-							
+							if( shifts.length === 0){
+//								$scope.Schedule.weeks[k].days[d].shifts[u] = {};
+//								$scope.Schedule.weeks[k].days[d].shifts[u].user_id = shift.user_id;
+//								$scope.Schedule.weeks[k].days[d].shifts[u].position = {};
+//								$scope.Schedule.weeks[k].days[d].shifts[u].position.name = "";
+                                $scope.Schedule.weeks[k].days[d].shifts[u].push({
+                                    user_id : $scope.Schedule.users[u].id,
+                                    position : {
+                                        name : ""
+                                    }
+                                });
+                            
+                            }
 						} // End if match shift to day
 					} // End for shifts
 				} // End for days
@@ -529,20 +544,25 @@ wiwApp.controller('SchedCtrl',[
                     $scope.Schedule.weeks[k].days[j].Afternoon = 0;
 
                     for(var i in $scope.Schedule.weeks[k].days[j].shifts){
-                        if($scope.Schedule.weeks[k].days[j].shifts[i].id || $scope.Schedule.weeks[k].days[j].shifts[i].selected_pos){
-                            var shiftStart;
-                            if(showPubUnpub($scope.Schedule.weeks[k].days[j].shifts[i].published))$scope.Schedule.users[xusers[$scope.Schedule.weeks[k].days[j].shifts[i].user_id]].numShifts++;
+                        var shifts = $scope.Schedule.weeks[k].days[j].shifts[i];
+                        
+                        for(var s in shifts){
+                            var shift = shifts[s];
+                            if(shift.id ||shift.selected_pos){
+                                var shiftStart;
+                                if(showPubUnpub(shift.published)&& shift.position.name !== 'TRAVEL' && shift.position.name !== 'On-Call' || shifts.length === 1)$scope.Schedule.users[xusers[shift.user_id]].numShifts++;
 
-                            shiftStart = new Date($scope.Schedule.weeks[k].days[j].shifts[i].start_time);
+                                shiftStart = new Date(shift.start_time);
 
-                                    //COUNTING SHIFTS IN A DAY
-                            if($scope.Schedule.weeks[k].days[j].shifts[i].position.name !== 'TRAVEL' && showPubUnpub($scope.Schedule.weeks[k].days[j].shifts[i].published)){
-                                if(shiftStart.getHours() < shiftCutoff){
-                                        $scope.Schedule.weeks[k].days[j].Day++;
-                                } else {
-                                        $scope.Schedule.weeks[k].days[j].Afternoon++;
-                                }
-                            }	
+                                        //COUNTING SHIFTS IN A DAY
+                                if(shift.position.name !== 'TRAVEL' && shift.position.name !== 'On-Call' && showPubUnpub(shift.published)){
+                                    if(shiftStart.getHours() < shiftCutoff){
+                                            $scope.Schedule.weeks[k].days[j].Day++;
+                                    } else {
+                                            $scope.Schedule.weeks[k].days[j].Afternoon++;
+                                    }
+                                }	
+                            }
                         }
                     }
                 }

@@ -38,33 +38,40 @@ var findUsers = function(db,callback){
 	
 };
 var getShifts = function(db,callback,cb2){
-	var cursor =db.collection('new_shifts').find();
-	
-	cursor.each(function(err, doc) {
-		assert.equal(err, null);
-		if (doc !== null) {
-		  callback(doc);
-		} else {
-			cb2();
-		}
-	});
+	if(dbConfig.enabled){
+        var cursor =db.collection('new_shifts').find();
+
+        cursor.each(function(err, doc) {
+            assert.equal(err, null);
+            if (doc !== null) {
+              callback(doc);
+            } else {
+                cb2();
+            }
+        });
+    } else {
+        cb2();
+    }
 };
 var findUser = function(id,callback) {
+    if(dbConfig.enabled){
+        var cursor = mdb.collection('users').find({'id':parseInt(id)});
+        var found = false;
 
-	var cursor = mdb.collection('users').find({'id':parseInt(id)});
-	var found = false;
-	
-	cursor.forEach(function(doc) {
-		console.log("Got response from mongodb");
-		if (doc !== null && !found) {
-			found = true;
-			callback(doc);
-			
-		} else if(!found) {
-			callback(false);
-			
-		}
-	});
+        cursor.forEach(function(doc) {
+            console.log("Got response from mongodb");
+            if (doc !== null && !found) {
+                found = true;
+                callback(doc);
+
+            } else if(!found) {
+                callback(false);
+
+            }
+        });
+    } else {
+        callback(false);
+    }
 };
 var insertUser = function(db,user,callback){
 	db.collection('users').insertOne(user,
@@ -199,7 +206,7 @@ app.get('/users',function(req,res,next){
             res.send(user);
 			res.end();
 		} else {
-			if(!sentUser){
+			if(!sentUser && dbConfig.enabled){
 				insertUser(mdb,{'id':parseInt(req.cookies.uid)},function(result){
 					console.log(result.result);
 					res.statusCode = 200;
@@ -207,7 +214,12 @@ app.get('/users',function(req,res,next){
 					res.send(result);
 					res.end();
 				});
-			}
+			} else {
+                res.statusCode = 200;
+                res.send('DB not set up on server');
+                res.send(false);
+                res.end();
+            }
 		}  
 		
 	});

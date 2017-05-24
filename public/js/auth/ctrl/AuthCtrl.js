@@ -53,10 +53,12 @@ wiwApp.controller('AuthCtrl',
 					}
                 },
                 function(response){
-                    if(response){
+                    if(response && response.data && response.data.error){
                         $scope.error = response.data.error;
-                        $scope.loggingIn = false;
+                    } else {
+                        $scope.error = response;
                     }
+                    $scope.loggingIn = false;
                 });
                 setTimeout(function(){
                     $scope.error = "No response from server!";
