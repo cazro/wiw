@@ -774,7 +774,7 @@ wiwApp.controller('SchedCtrl',[
 			
 			update();
             
-            $interval(update,10800000);
+            //$interval(update,10800000);
 		
         } else {
             $state.go('login');
