@@ -17,6 +17,7 @@ var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
 var dbConfig = config.get('mongodb');
 var url = 'mongodb://'+dbConfig.host+':'+dbConfig.port+'/'+dbConfig.db;
+var devKey = config.get('key');
 var shifts;
 var user;
 var users = [];
@@ -226,6 +227,9 @@ app.get('/users',function(req,res,next){
 
 });
 
+app.get('/key',function(req,res,next){
+    res.send({'WKey':devKey}).end();
+});
 ////////////////////
 ///////POSTS //////
 //////////////////

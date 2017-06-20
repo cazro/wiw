@@ -14,6 +14,7 @@ wiwApp.controller('AuthCtrl',
 			$scope.user = {
 				chosenAccountID:0
 			}
+            var devKey;
 			
             $scope.login = function(){
                 $scope.loggingIn = true;
@@ -22,14 +23,15 @@ wiwApp.controller('AuthCtrl',
                 resource.login(
                 {
                     username: $scope.User.email,
-                    password: $scope.User.pass
+                    password: $scope.User.pass,
+                    "key":devKey
                     
                 },
                 function(resData){
                     $scope.User.pass = resData.login.token;
 					
                     console.log("Auth from WIW success");
-					
+					console.log(resData);
 					$rootScope.user = resData;
                     if(resData.user){
 						$cookies.put('uid',resData.user.id);
@@ -53,6 +55,7 @@ wiwApp.controller('AuthCtrl',
 					}
                 },
                 function(response){
+                    console.log(response);
                     if(response && response.data && response.data.error){
                         $scope.error = response.data.error;
                     } else {
@@ -70,21 +73,22 @@ wiwApp.controller('AuthCtrl',
 				for(var u in $scope.users){
 					if($scope.users[u].account_id === $scope.user.chosenAccountID){
 						$cookies.put('uid',$scope.users[u].id);
-						$cookies.put('tok',$rootScope.user.login.token);
+						$cookies.put('tok',$scope.users[u].token);
 
 						$rootScope.user.user = $scope.users[u];
 
 						AuthFactory.authSesh.authed(
 						{
 							'uid': $scope.users[u].id,
-							'tok': $rootScope.user.login.token
+							'tok': $scope.users[u].token
 						},
 						function(res){
 
 							$state.go('schedule');
 						});
+                        break;
 					}
-					break;
+					
 				}
 			};
             $scope.logout = function(){
@@ -92,6 +96,7 @@ wiwApp.controller('AuthCtrl',
                     $cookies.remove('tok');
                     $state.go('login');
             };
+            
             if($cookies.get('uid') && $cookies.get('tok') ){
                 $scope.logginIn = false;
                 $rootScope.user = {};
@@ -116,8 +121,15 @@ wiwApp.controller('AuthCtrl',
                   });
 
             } else {
-                    $scope.showLogin = true;
-                    $scope.loggingIn = false;
+                AuthFactory.getKey.get(null,function(res){
+                    devKey = res.WKey;
+                },
+                function(err){
+
+                });
+                
+                $scope.showLogin = true;
+                $scope.loggingIn = false;
             }
         }
 

@@ -365,7 +365,7 @@ wiwApp.controller('SchedCtrl',[
 			},function(posData){
 					
 				$scope.Schedule.positions = posData.positions;
-				
+				xpos[0] = {name:""};
 				for(var i in posData.positions){
 					xpos[parseInt(posData.positions[i].id)] = posData.positions[i];
 				}
@@ -482,13 +482,19 @@ wiwApp.controller('SchedCtrl',[
 							if(newShift.published)newShift.published_date = new Date(shift.published_date);
 							if(newShift.acknowledged)newShift.acknowledged_at = new Date(shift.acknowledged_at);
 							if(!shift.selected_pos){
-								newShift.position = xpos[shift.position_id];
-							}else{
+                                if(shift.position_id){
+                                    newShift.position = xpos[shift.position_id];
+                                } else {
+                                    newShift.position = {
+                                        name: newShift.start_time.toTimeString()
+                                    };
+                                }
+                            }else{
 								addShift($scope.Schedule.weeks[k].days[d].shifts[u],myStart,u,d,k);
 							}
-							
+							console.log(newShift);
 							//COUNTING SHIFTS IN A DAY
-							if(newShift.position.name !== 'TRAVEL' && showPubUnpub(newShift.published)){
+							if(newShift.position && newShift.position.name !== 'TRAVEL' && showPubUnpub(newShift.published)){
 								$scope.Schedule.users[u].numShifts++;
                                 if(shiftStart.getHours() < shiftCutoff){
 									$scope.Schedule.weeks[k].days[d].Day++;
@@ -509,10 +515,6 @@ wiwApp.controller('SchedCtrl',[
 							// SHIFT DOES NOT MATCH THE DATE
 							// CREATE BASIC OBJECT TO FILL SPACE
 							if( shifts.length === 0){
-//								$scope.Schedule.weeks[k].days[d].shifts[u] = {};
-//								$scope.Schedule.weeks[k].days[d].shifts[u].user_id = shift.user_id;
-//								$scope.Schedule.weeks[k].days[d].shifts[u].position = {};
-//								$scope.Schedule.weeks[k].days[d].shifts[u].position.name = "";
                                 $scope.Schedule.weeks[k].days[d].shifts[u].push({
                                     user_id : $scope.Schedule.users[u].id,
                                     position : {

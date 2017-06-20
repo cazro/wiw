@@ -1,34 +1,40 @@
 wiwApp.factory('AuthFactory',
 [
-    '$resource', 
-    function($resource){
+    '$resource','$http', 
+    function($resource,$http){
         
         var key;
-        $.getJSON('/js/var/wiw.json',function(obj){
-            key = obj.WKey;
-        });
-        return  {
-            wiwLogin: $resource('https://api.wheniwork.com/2/login',null,{
-                login:
-                {
-                    method:'POST',
-                    headers:
+       // $http.get('/key').then(
+        //function(doc){
+         //   console.log(doc);
+       //     key = doc.WKey;
+            return  {
+                wiwLogin: $resource('https://api.wheniwork.com/2/login',null,{
+                    login:
                     {
-                        'Content-Type':'application/json',
-                        'W-Key':key
+                        method:'POST',
+                        headers:
+                        {
+                            'Content-Type':'application/json',
+                             'W-Key': '@key'
+                        }
                     }
-                }
-            }),
-            authSesh: $resource('/login', null, {
-                authed:
-                {
-                    method:'POST',
-                    headers:
+                }),
+                getKey: $resource('/key',null,null),
+                authSesh: $resource('/login', null, {
+                    authed:
                     {
-                       // 'Content-Type':'application/json'
+                        method:'POST',
+                        headers:
+                        {
+                           // 'Content-Type':'application/json'
+                        }
                     }
-                }
-            })
-        };
+                })
+            };
+       // },function(err){
+      //      return {};
+      //  });
+      
 }]);
 
