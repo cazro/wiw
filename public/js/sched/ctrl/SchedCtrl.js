@@ -415,23 +415,23 @@ wiwApp.controller('SchedCtrl',[
 				$scope.Schedule.users = [];
 				var deled;
 				for (var m in data.users){
-					if(data.users[m].id === 3868711){
-						delete data.users[m];
-						deled = m;
-						//data.users.splice(m,1);
-					} else {
-						if(m > deled){
-							xusers[data.users[m].id] = m-1;
-							$scope.Schedule.users[m-1] = data.users[m];
-							$scope.Schedule.users[m-1].numShifts = 0;
-							getShifts(m-1,$scope.Schedule.users[m-1].id);
-						} else{
+//					if(data.users[m].id === 3868711){
+//						delete data.users[m];
+//						deled = m;
+//						//data.users.splice(m,1);
+//					} else {
+//						if(m > deled){
+//							xusers[data.users[m].id] = m-1;
+//							$scope.Schedule.users[m-1] = data.users[m];
+//							$scope.Schedule.users[m-1].numShifts = 0;
+//							getShifts(m-1,$scope.Schedule.users[m-1].id);
+//						} else{
 							xusers[data.users[m].id] = m;
 							$scope.Schedule.users[m] = data.users[m];
 							$scope.Schedule.users[m].numShifts = 0;
 							getShifts(m,$scope.Schedule.users[m].id);
-						}
-					}
+//						}
+//					}
 				}
 				
 				final();

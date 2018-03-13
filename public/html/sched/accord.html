@@ -10,7 +10,7 @@
 							Date
 					</p>
 				</th>
-				<th class="user-col" ng-repeat="user in Schedule.users">
+				<th class="user-col" ng-repeat="user in Schedule.users track by $index" ng-if="user.numShifts">
 					<p class="text-center user" ng-bind='user.first_name+" "+user.last_name'></p>
 				</th>
 				<th hide-xs class="shift-count">
@@ -48,7 +48,7 @@
 							<p class="shiftDate">{{day.start | date:"M/d"}}</p>
 						</td>
 	<!-- SHIFTS PER USER -->
-						<td class="user-col" ng-repeat="person in day.shifts track by $index">
+						<td class="user-col" ng-repeat="person in day.shifts track by $index" ng-if="Schedule.users[$index].numShifts">
 						
 							<div ng-repeat="shift in person" ng-cloak class="shift-name text-center "title ="Click for more info." ng-click="showInfo($event,shift)" ng-mousedown="mdClass='shift-md'" ng-mouseleave="mdClass='shift-mu'" ng-mouseup="mdClass='shift-mu'" ng-if="showPubUnpub(shift.published)" ng-bind='((shift.position.name).split(" "))[0]' ng-init="mdClass='shift-mu'" ng-class="mdClass" ng-style="getGrad(shift.color)">
 
@@ -86,7 +86,7 @@
 				<th class="date-col">
 	<!-- Date column -->    
 				</th>
-				<th class="user-col" ng-repeat="user in Schedule.users track by $index">
+				<th class="user-col" ng-repeat="user in Schedule.users track by $index" ng-if="user.numShifts">
 					<p class="text-center" ng-bind='user.numShifts'></p>
 				</th>
 				<th hide-xs class="shift-countx2" colspan="2">
